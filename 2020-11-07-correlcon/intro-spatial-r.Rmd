@@ -1,0 +1,641 @@
+---
+title: "Introduction to Geodata in R"
+subtitle: "Session: Working with Geospatial Data"
+author: "Michael Matiu"
+institute: ""
+date: "2020/11/07"
+output:
+  xaringan::moon_reader:
+    css: [default, css/extra.css]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_panelset()
+
+library(sf)
+library(raster)
+library(stars)
+library(mapview)
+library(dplyr)
+library(ggplot2)
+
+
+```
+
+
+## What is geospatial data?
+
+Everything that can be pointed to somewhere on the earth (for now).
+
+.center[<a title="https://clauswilke.com/dataviz/geospatial-data.html#fig:world-orthographic" href="https://clauswilke.com/dataviz/geospatial-data.html#fig:world-orthographic"><img src="https://clauswilke.com/dataviz/geospatial_data_files/figure-html/world-orthographic-1.png" height="400px"></a>]
+
+.tiny[Source: Claus O. Wilke, *Fundamentals of Data Visualization*]
+ 
+
+---
+
+
+## Why projections?
+
+Problem: The world is a sphere, but maps are 2D.
+
+Task: Peel an orange, and lay the peels flat on the table.
+
+.pull-left[.center[
+
+<br><br>
+
+<a title="Evan-Amos, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Orange-Whole-%26-Split.jpg"><img width="512" alt="Orange-Whole-&amp;-Split" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Orange-Whole-%26-Split.jpg/512px-Orange-Whole-%26-Split.jpg"></a>
+
+]]
+
+.pull-right[
+```{r worldmap-simple, echo=FALSE}
+sf_world <- st_as_sf(rworldmap::getMap(resolution = "low"))
+
+ggplot(sf_world)+
+  geom_sf()+
+  theme_void()
+
+```
+]
+
+
+
+
+---
+
+## Projections overview
+
+.panelset[
+.panel[.panel-name[Issue]
+
+Exact projection of curves surfaces on flat surfaces impossible. Options:
+
+- preserve shapes (*conformal*)
+- preserve area (*equa-area*)
+- preserve direction (*azimuthal*)
+- preserve distance (*equidistant*)
+- preserve none of the above exactly, but approximate multiple features
+
+
+
+
+]
+
+.panel[.panel-name[Ex1: Goode]
+
+Goode homolosine projection (equal-area)
+
+
+<a title="Strebe, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Goode_homolosine_projection_SW.jpg"><img width="auto" height="350px" alt="Goode homolosine projection SW" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Goode_homolosine_projection_SW.jpg/1024px-Goode_homolosine_projection_SW.jpg"></a>
+
+.tiny[Source: <a href="https://commons.wikimedia.org/wiki/File:Goode_homolosine_projection_SW.jpg">Strebe</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Ex2: Mercator]
+
+Mercator (conformal)
+
+
+<a title="Strebe, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Mercator_projection_Square.JPG"><img width="auto" height="350px" alt="Mercator projection Square" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Mercator_projection_Square.JPG/1024px-Mercator_projection_Square.JPG"></a>
+
+
+.tiny[Source: <a href="https://commons.wikimedia.org/wiki/File:Mercator_projection_Square.JPG">Strebe</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Ex3: Mollweide]
+
+Mollweide (equal-area)
+
+<a title="Strebe, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Mollweide_projection_SW.jpg"><img width="auto" height="350px" alt="Mollweide projection SW" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Mollweide_projection_SW.jpg/1024px-Mollweide_projection_SW.jpg"></a>
+
+.tiny[Source: <a href="https://commons.wikimedia.org/wiki/File:Mollweide_projection_SW.jpg">Strebe</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Conclusion]
+
+Keep in mind that different projections exist.
+
+In most cases, though, no need to bother:
+
+  - projection is often predetermined
+  - software usually has good defaults
+    
+
+]
+
+]
+
+
+
+---
+
+## Spatial data
+
+
+.panelset[
+.panel[.panel-name[Vector]
+
+
+.center[<a href="https://geocompr.robinlovelace.net/spatial-class.html#fig:sf-ogc"><img src="https://geocompr.robinlovelace.net/figures/sf-classes.png" height="400px"></a>]
+
+.tiny[Source: Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*]
+ 
+
+]
+
+.panel[.panel-name[Raster]
+
+
+.center[<a href="https://geocompr.robinlovelace.net/spatial-class.html#fig:raster-intro-plot"><img src="https://geocompr.robinlovelace.net/02-spatial-data_files/figure-html/raster-intro-plot-1.png" height="400px"></a>]
+
+.tiny[Source: Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*]
+ 
+
+
+]
+
+.panel[.panel-name[CRS]
+
+Coordinate Reference System.
+
+Defines how spatial elements relate to the earth.
+
+Two types of coordinate systems:
+
+- **geographic**: longitude and latitude, datum (defines to what sphere/ellipsoid the lon & lat refer to)
+- **projected**: x (Easting) and y (Northing) on implicit flat surface, origin, and linear units (usually meters)
+
+
+Conversion between these two, and between all projections handled by PROJ library. 
+
+Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs") or as EPSG code (e.g. 4326). 
+
+
+
+]
+
+.panel[.panel-name[Attributes and values]
+
+Additional information on the spatial object (point, line, polygon).
+
+Examples:
+
+- Name
+- Country
+- Population
+- Date
+- Temperature
+- Elevation
+
+For rasters the cell values are of main interest. Values must be numeric.
+
+
+
+]
+
+]
+
+
+---
+
+## Spatial objects in R
+
+### Basic
+
+The one-stop-shop for vector data: the **sf** package
+
+For raster data: **raster** and **stars**
+
+Quick exploration: **mapview**
+
+
+### And a ton of other packages...
+
+...for any need you might imagine. 
+
+
+
+.tiny[Example data used here is coming from https://www.gadm.org/, https://www.naturalearthdata.com, and https://chelsa-climate.org/.]
+
+
+
+---
+
+
+## sf
+
+
+.panelset[
+
+
+.panel[.panel-name[why sf?]
+
+
+  - succesor to **sp** package.
+  - *supercharged* data.frame
+      + attributes are data.frame columns
+      + one additional column that holds the geometry (spatial objects)
+      + plus stores CRS, extent (bounding box)
+      + tidy: each row is one spatial object (point, line, polygon, or multi*)
+  - closely integrated into the tidyverse (dplyr, pipe, geom_sf)
+  - consistent naming: functions in **sf** start with `st_*`
+
+
+
+]
+
+
+.panel[.panel-name[read]
+
+```{r}
+# NUTS level 1 of Croatia
+sf_polygons <- st_read("data/gadm36_HRV_shp/gadm36_HRV_1.shp")
+``` 
+
+
+
+]
+
+.panel[.panel-name[overview]
+
+```{r}
+class(sf_polygons)
+print(sf_polygons, n = 5) # print only first 5 instead of default 10 features
+``` 
+
+
+]
+
+
+.panel[.panel-name[extract]
+
+
+```{r}
+st_bbox(sf_polygons)
+raster::projection(sf_polygons) # proj4string
+# st_crs(sf_polygons) # CRS object
+``` 
+
+
+]
+
+
+.panel[.panel-name[tidyverse]
+
+
+```{r}
+sf_polygons %>% 
+  dplyr::select(starts_with("NAM")) %>% 
+  dplyr::filter(stringr::str_starts(NAME_1, "B"))
+``` 
+
+]
+
+.panel[.panel-name[plot]
+
+
+```{r, warning=FALSE, out.height='350px'}
+plot(sf_polygons)
+``` 
+
+]
+
+
+.panel[.panel-name[mapview]
+
+In external file, because of size (mapview object holds *all* data)
+
+```{r, eval=FALSE}
+mapview(sf_polygons)
+``` 
+
+
+]
+ 
+]
+
+
+
+
+---
+
+## Points, lines, and polygons
+
+
+
+
+```{r}
+# naturalearth cities & rivers
+sf_points <- st_read("data/ne_10m_populated_places_simple/ne_10m_populated_places_simple.shp")
+sf_lines <- st_read("data/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_centerlines.shp")
+```  
+
+
+
+
+```{r, eval=FALSE}
+mapview(list(sf_points, sf_lines, sf_polygons))
+``` 
+
+
+
+
+
+
+
+---
+
+
+
+## Cropping & intersecting
+
+crop = bounding box (rectangle)
+
+intersection = within polygon
+
+
+```{r, warning=FALSE, message=FALSE}
+sf_points_crop <- st_crop(sf_points, sf_polygons)
+sf_points_intersect <- st_intersection(sf_points, sf_polygons)
+```
+
+
+```{r, eval=FALSE}
+mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
+```
+
+
+
+
+
+
+
+---
+
+## ggplot2: geom_sf
+
+
+```{r out.height='450px'}
+ggplot()+
+  geom_sf(data = sf_polygons)+
+  geom_sf(data = sf_points_intersect, aes(size = pop_max/1000))+
+  theme_minimal()
+```
+
+
+---
+
+## Manually creating sf objects
+
+Often not needed, since most spatial data comes as shape files or similar. 
+
+The only use is for point data that comes as text.
+
+```{r}
+tbl_ber <- tibble(name = "Berlin", long = 13.408333, lat = 52.5186)
+sf_ber <- st_as_sf(tbl_ber, 
+                   coords = c("long", "lat"),
+                   crs = 4326) 
+# 4326 is the EPSG code for longlat projection
+# also possible to supply CRS object or proj4string, but this is shorter
+sf_ber
+```
+
+
+
+
+---
+
+## Raster
+
+.panelset[
+  
+  
+.panel[.panel-name[read]
+         
+```{r}
+# average November precipitation (mm)
+rr <- raster("data/CHELSA_prec_11_V1.2_land.tif")
+rr
+```
+
+
+]
+
+.panel[.panel-name[plot]
+
+```{r, fig.height=5, fig.width=10, out.width='800px', out.height='400px'}
+plot(rr)
+```
+
+]
+
+.panel[.panel-name[crop]
+
+The raster package is still using sp (*Spatial*) classes, but no worries.
+
+```{r}
+rr_crop <- crop(rr, as(sf_polygons, "Spatial"))
+rr_mask <- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+```
+```{r, eval=FALSE}
+mapview(list(rr_crop, rr_mask))
+```
+
+
+]
+
+
+
+.panel[.panel-name[multiple layers]
+
+Rasters can contain multiple layers (think cube or 3D array instead of 2D).
+
+`raster()` reads by default the first layer (band), but can be changed with `raster(x, band = .)`
+
+To read in all layers of a file, use `brick()`. Then there is `stack()` which can create a collection of layers from multiple objects or multiple files. (necessary to have the same extent and resolution)
+
+
+
+]
+
+
+  
+]
+
+
+
+
+---
+
+## Combining vector with raster
+
+
+
+.panelset[
+  
+  
+.panel[.panel-name[points]
+
+```{r}
+nov_prec <- extract(rr, as(sf_points, "Spatial"))
+str(nov_prec) # only values
+sf_points2 <- sf_points %>% mutate(nov_prec = nov_prec) # add them to the sf_points
+```
+
+
+]
+
+
+.panel[.panel-name[points example]
+
+```{r}
+# show the wettest cities in Germany in November
+sf_points2 %>% 
+  select(nameascii, adm0_a3, nov_prec) %>% 
+  filter(adm0_a3 == "DEU") %>% 
+  arrange(-nov_prec)
+```
+
+
+]
+
+
+
+
+.panel[.panel-name[raster to data.frame]
+
+We take the smallest (masked) raster. Things can get quite big, so watch out.
+
+```{r}
+df_rr_mask <- as.data.frame(rr_mask, xy = T, na.rm = T)
+tibble(df_rr_mask)
+```
+
+
+
+]
+
+
+
+.panel[.panel-name[polygons]
+
+Option A: Use `extract()` as in the points case.
+
+Option B: Rasterize the shape file, and then use raster operations or coerce to data.frame.
+
+```{r}
+rr_polygons <- rasterize(as(sf_polygons, "Spatial"), rr_mask)
+rr_polygons
+```
+
+]
+
+
+
+.panel[.panel-name[polygons example]
+
+```{r, out.height='400px'}
+plot(rr_polygons)
+```
+
+
+]
+
+
+]
+
+
+
+
+
+
+
+---
+
+## Further topics not covered here
+
+
+**Spatial operations**
+
+  - vector: set operations, transformations
+  - raster: functions on cell values, layers, ...
+
+
+**Reprojecting**
+
+  - necessary for data analysis when data comes in different projections (just for visualization not always needed)
+  - for raster data, this usually involves interpolation (nearest neighbour, bilinear, ...)
+
+**File formats**
+
+  - Shape files (`.shp`) and GeoTIFFs (`.tif`) are most common
+  - For climate grids standard is NetCDF (`.nc`)
+  - but also other formats in the wild: GeoJSON, ...
+
+<!--
+**Spatial statistics**
+
+  - spatial correlation
+  - variograms
+  - kriging
+
+**Satellite image analysis**
+
+  - layer (band) operations
+  - classification
+  - nice intro at last WhyR conference:  
+-->
+
+
+---
+
+## Links
+
+  - Actually a dataviz book. Only one section on geodata, but very concise:<br>
+  Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/
+
+  - In depth view of spatial data analysis with R:<br>
+  Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*, https://geocompr.robinlovelace.net/
+  
+  - For the hard-core technical stuff:<br>
+  Spatial Data Science with R — R Spatial, https://rspatial.org/
+
+
+---
+
+class: center, middle
+
+# `? -> ! -> ???`
+
+
+
+```{r mapshots, echo=F, eval=F}
+mapshot(mapview(sf_polygons), "extra/mapview_01_sf_polygons.html")
+mapshot(mapview(list(sf_points, sf_lines, sf_polygons)),
+        "extra/mapview_02_list_sf.html")
+mapshot(mapview(list(sf_points_crop, sf_points_intersect, sf_polygons)),
+        "extra/mapview_03_crop_intersect.html")
+mapshot(mapview(list(rr_crop, rr_mask)),
+        "extra/mapview_04_raster_crop.html")
+```
+
+
+
+
+

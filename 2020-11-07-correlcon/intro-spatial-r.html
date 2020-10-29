@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to Geodata in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Michael Matiu" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to Geodata in R
+## Session: Working with Geospatial Data
+### Michael Matiu
+### 2020/11/07
+
+---
+
+
+
+
+
+## What is geospatial data?
+
+Everything that can be pointed to somewhere on the earth (for now).
+
+.center[&lt;a title="https://clauswilke.com/dataviz/geospatial-data.html#fig:world-orthographic" href="https://clauswilke.com/dataviz/geospatial-data.html#fig:world-orthographic"&gt;&lt;img src="https://clauswilke.com/dataviz/geospatial_data_files/figure-html/world-orthographic-1.png" height="400px"&gt;&lt;/a&gt;]
+
+.tiny[Source: Claus O. Wilke, *Fundamentals of Data Visualization*]
+ 
+
+---
+
+
+## Why projections?
+
+Problem: The world is a sphere, but maps are 2D.
+
+Task: Peel an orange, and lay the peels flat on the table.
+
+.pull-left[.center[
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;a title="Evan-Amos, CC BY-SA 3.0 &amp;lt;https://creativecommons.org/licenses/by-sa/3.0&amp;gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Orange-Whole-%26-Split.jpg"&gt;&lt;img width="512" alt="Orange-Whole-&amp;amp;-Split" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Orange-Whole-%26-Split.jpg/512px-Orange-Whole-%26-Split.jpg"&gt;&lt;/a&gt;
+
+]]
+
+.pull-right[
+![](intro-spatial-r_files/figure-html/worldmap-simple-1.png)&lt;!-- --&gt;
+]
+
+
+
+
+---
+
+## Projections overview
+
+.panelset[
+.panel[.panel-name[Issue]
+
+Exact projection of curves surfaces on flat surfaces impossible. Options:
+
+- preserve shapes (*conformal*)
+- preserve area (*equa-area*)
+- preserve direction (*azimuthal*)
+- preserve distance (*equidistant*)
+- preserve none of the above exactly, but approximate multiple features
+
+
+
+
+]
+
+.panel[.panel-name[Ex1: Goode]
+
+Goode homolosine projection (equal-area)
+
+
+&lt;a title="Strebe, CC BY-SA 3.0 &amp;lt;https://creativecommons.org/licenses/by-sa/3.0&amp;gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Goode_homolosine_projection_SW.jpg"&gt;&lt;img width="auto" height="350px" alt="Goode homolosine projection SW" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Goode_homolosine_projection_SW.jpg/1024px-Goode_homolosine_projection_SW.jpg"&gt;&lt;/a&gt;
+
+.tiny[Source: &lt;a href="https://commons.wikimedia.org/wiki/File:Goode_homolosine_projection_SW.jpg"&gt;Strebe&lt;/a&gt;, &lt;a href="https://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Ex2: Mercator]
+
+Mercator (conformal)
+
+
+&lt;a title="Strebe, CC BY-SA 3.0 &amp;lt;https://creativecommons.org/licenses/by-sa/3.0&amp;gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Mercator_projection_Square.JPG"&gt;&lt;img width="auto" height="350px" alt="Mercator projection Square" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Mercator_projection_Square.JPG/1024px-Mercator_projection_Square.JPG"&gt;&lt;/a&gt;
+
+
+.tiny[Source: &lt;a href="https://commons.wikimedia.org/wiki/File:Mercator_projection_Square.JPG"&gt;Strebe&lt;/a&gt;, &lt;a href="https://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Ex3: Mollweide]
+
+Mollweide (equal-area)
+
+&lt;a title="Strebe, CC BY-SA 3.0 &amp;lt;https://creativecommons.org/licenses/by-sa/3.0&amp;gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Mollweide_projection_SW.jpg"&gt;&lt;img width="auto" height="350px" alt="Mollweide projection SW" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Mollweide_projection_SW.jpg/1024px-Mollweide_projection_SW.jpg"&gt;&lt;/a&gt;
+
+.tiny[Source: &lt;a href="https://commons.wikimedia.org/wiki/File:Mollweide_projection_SW.jpg"&gt;Strebe&lt;/a&gt;, &lt;a href="https://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, via Wikimedia Commons]
+
+]
+
+
+.panel[.panel-name[Conclusion]
+
+Keep in mind that different projections exist.
+
+In most cases, though, no need to bother:
+
+  - projection is often predetermined
+  - software usually has good defaults
+    
+
+]
+
+]
+
+
+
+---
+
+## Spatial data
+
+
+.panelset[
+.panel[.panel-name[Vector]
+
+
+.center[&lt;a href="https://geocompr.robinlovelace.net/spatial-class.html#fig:sf-ogc"&gt;&lt;img src="https://geocompr.robinlovelace.net/figures/sf-classes.png" height="400px"&gt;&lt;/a&gt;]
+
+.tiny[Source: Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*]
+ 
+
+]
+
+.panel[.panel-name[Raster]
+
+
+.center[&lt;a href="https://geocompr.robinlovelace.net/spatial-class.html#fig:raster-intro-plot"&gt;&lt;img src="https://geocompr.robinlovelace.net/02-spatial-data_files/figure-html/raster-intro-plot-1.png" height="400px"&gt;&lt;/a&gt;]
+
+.tiny[Source: Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*]
+ 
+
+
+]
+
+.panel[.panel-name[CRS]
+
+Coordinate Reference System.
+
+Defines how spatial elements relate to the earth.
+
+Two types of coordinate systems:
+
+- **geographic**: longitude and latitude, datum (defines to what sphere/ellipsoid the lon &amp; lat refer to)
+- **projected**: x (Easting) and y (Northing) on implicit flat surface, origin, and linear units (usually meters)
+
+
+Conversion between these two, and between all projections handled by PROJ library. 
+
+Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs") or as EPSG code (e.g. 4326). 
+
+
+
+]
+
+.panel[.panel-name[Attributes and values]
+
+Additional information on the spatial object (point, line, polygon).
+
+Examples:
+
+- Name
+- Country
+- Population
+- Date
+- Temperature
+- Elevation
+
+For rasters the cell values are of main interest. Values must be numeric.
+
+
+
+]
+
+]
+
+
+---
+
+## Spatial objects in R
+
+### Basic
+
+The one-stop-shop for vector data: the **sf** package
+
+For raster data: **raster** and **stars**
+
+Quick exploration: **mapview**
+
+
+### And a ton of other packages...
+
+...for any need you might imagine. 
+
+
+
+.tiny[Example data used here is coming from https://www.gadm.org/, https://www.naturalearthdata.com, and https://chelsa-climate.org/.]
+
+
+
+---
+
+
+## sf
+
+
+.panelset[
+
+
+.panel[.panel-name[why sf?]
+
+
+  - succesor to **sp** package.
+  - *supercharged* data.frame
+      + attributes are data.frame columns
+      + one additional column that holds the geometry (spatial objects)
+      + plus stores CRS, extent (bounding box)
+      + tidy: each row is one spatial object (point, line, polygon, or multi*)
+  - closely integrated into the tidyverse (dplyr, pipe, geom_sf)
+  - consistent naming: functions in **sf** start with `st_*`
+
+
+
+]
+
+
+.panel[.panel-name[read]
+
+
+```r
+# NUTS level 1 of Croatia
+sf_polygons &lt;- st_read("data/gadm36_HRV_shp/gadm36_HRV_1.shp")
+```
+
+```
+## Reading layer `gadm36_HRV_1' from data source `C:\projects-r-web\slides\2020-11-07-correlcon\data\gadm36_HRV_shp\gadm36_HRV_1.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 21 features and 10 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 13.48958 ymin: 42.38543 xmax: 19.43518 ymax: 46.55052
+## geographic CRS: WGS 84
+```
+
+
+
+]
+
+.panel[.panel-name[overview]
+
+
+```r
+class(sf_polygons)
+```
+
+```
+## [1] "sf"         "data.frame"
+```
+
+```r
+print(sf_polygons, n = 5) # print only first 5 instead of default 10 features
+```
+
+```
+## Simple feature collection with 21 features and 10 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 13.48958 ymin: 42.38543 xmax: 19.43518 ymax: 46.55052
+## geographic CRS: WGS 84
+## First 5 features:
+##   GID_0  NAME_0   GID_1                 NAME_1               VARNAME_1
+## 1   HRV Croatia HRV.1_1 Bjelovarska-Bilogorska       Bjelovar-Bilagora
+## 2   HRV Croatia HRV.2_1       Brodsko-Posavska Slavonski Brod-Posavina
+## 3   HRV Croatia HRV.3_1 Dubrovacko-Neretvanska       Dubrovnik-Neretva
+## 4   HRV Croatia HRV.4_1            Grad Zagreb                    &lt;NA&gt;
+## 5   HRV Croatia HRV.5_1               Istarska                   Istra
+##   NL_NAME_1   TYPE_1 ENGTYPE_1 CC_1 HASC_1                       geometry
+## 1      &lt;NA&gt; Županija    County &lt;NA&gt;  HR.BB MULTIPOLYGON (((17.40924 45...
+## 2      &lt;NA&gt; Županija    County &lt;NA&gt;  HR.SP MULTIPOLYGON (((17.14642 45...
+## 3      &lt;NA&gt; Županija    County &lt;NA&gt;  HR.DN MULTIPOLYGON (((16.27514 42...
+## 4      &lt;NA&gt;     Grad      City &lt;NA&gt;  HR.GZ MULTIPOLYGON (((16.06084 45...
+## 5      &lt;NA&gt; Županija    County &lt;NA&gt;  HR.IS MULTIPOLYGON (((13.87487 44...
+```
+
+
+]
+
+
+.panel[.panel-name[extract]
+
+
+
+```r
+st_bbox(sf_polygons)
+```
+
+```
+##     xmin     ymin     xmax     ymax 
+## 13.48958 42.38543 19.43518 46.55052
+```
+
+```r
+raster::projection(sf_polygons) # proj4string
+```
+
+```
+## [1] "+proj=longlat +datum=WGS84 +no_defs"
+```
+
+```r
+# st_crs(sf_polygons) # CRS object
+```
+
+
+]
+
+
+.panel[.panel-name[tidyverse]
+
+
+
+```r
+sf_polygons %&gt;% 
+  dplyr::select(starts_with("NAM")) %&gt;% 
+  dplyr::filter(stringr::str_starts(NAME_1, "B"))
+```
+
+```
+## Simple feature collection with 2 features and 2 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 16.47865 ymin: 45.05429 xmax: 18.56575 ymax: 46.09102
+## geographic CRS: WGS 84
+##    NAME_0                 NAME_1                       geometry
+## 1 Croatia Bjelovarska-Bilogorska MULTIPOLYGON (((17.40924 45...
+## 2 Croatia       Brodsko-Posavska MULTIPOLYGON (((17.14642 45...
+```
+
+]
+
+.panel[.panel-name[plot]
+
+
+
+```r
+plot(sf_polygons)
+```
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-5-1.png" height="350px" /&gt;
+
+]
+
+
+.panel[.panel-name[mapview]
+
+In external file, because of size (mapview object holds *all* data)
+
+
+```r
+mapview(sf_polygons)
+```
+
+
+]
+ 
+]
+
+
+
+
+---
+
+## Points, lines, and polygons
+
+
+
+
+
+```r
+# naturalearth cities &amp; rivers
+sf_points &lt;- st_read("data/ne_10m_populated_places_simple/ne_10m_populated_places_simple.shp")
+```
+
+```
+## Reading layer `ne_10m_populated_places_simple' from data source `C:\projects-r-web\slides\2020-11-07-correlcon\data\ne_10m_populated_places_simple\ne_10m_populated_places_simple.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 7343 features and 38 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -179.59 ymin: -90 xmax: 179.3833 ymax: 82.48332
+## geographic CRS: WGS 84
+```
+
+```r
+sf_lines &lt;- st_read("data/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_centerlines.shp")
+```
+
+```
+## Reading layer `ne_10m_rivers_lake_centerlines' from data source `C:\projects-r-web\slides\2020-11-07-correlcon\data\ne_10m_rivers_lake_centerlines\ne_10m_rivers_lake_centerlines.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 1455 features and 34 fields (with 1 geometry empty)
+## geometry type:  MULTILINESTRING
+## dimension:      XY
+## bbox:           xmin: -164.9035 ymin: -52.15773 xmax: 177.5204 ymax: 75.79348
+## geographic CRS: WGS 84
+```
+
+
+
+
+
+```r
+mapview(list(sf_points, sf_lines, sf_polygons))
+```
+
+
+
+
+
+
+
+---
+
+
+
+## Cropping &amp; intersecting
+
+crop = bounding box (rectangle)
+
+intersection = within polygon
+
+
+
+```r
+sf_points_crop &lt;- st_crop(sf_points, sf_polygons)
+sf_points_intersect &lt;- st_intersection(sf_points, sf_polygons)
+```
+
+
+
+```r
+mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
+```
+
+
+
+
+
+
+
+---
+
+## ggplot2: geom_sf
+
+
+
+```r
+ggplot()+
+  geom_sf(data = sf_polygons)+
+  geom_sf(data = sf_points_intersect, aes(size = pop_max/1000))+
+  theme_minimal()
+```
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-11-1.png" height="450px" /&gt;
+
+
+---
+
+## Manually creating sf objects
+
+Often not needed, since most spatial data comes as shape files or similar. 
+
+The only use is for point data that comes as text.
+
+
+```r
+tbl_ber &lt;- tibble(name = "Berlin", long = 13.408333, lat = 52.5186)
+sf_ber &lt;- st_as_sf(tbl_ber, 
+                   coords = c("long", "lat"),
+                   crs = 4326) 
+# 4326 is the EPSG code for longlat projection
+# also possible to supply CRS object or proj4string, but this is shorter
+sf_ber
+```
+
+```
+## Simple feature collection with 1 feature and 1 field
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: 13.40833 ymin: 52.5186 xmax: 13.40833 ymax: 52.5186
+## geographic CRS: WGS 84
+## # A tibble: 1 x 2
+##   name             geometry
+## * &lt;chr&gt;         &lt;POINT [°]&gt;
+## 1 Berlin (13.40833 52.5186)
+```
+
+
+
+
+---
+
+## Raster
+
+.panelset[
+  
+  
+.panel[.panel-name[read]
+         
+
+```r
+# average November precipitation (mm)
+rr &lt;- raster("data/CHELSA_prec_11_V1.2_land.tif")
+rr
+```
+
+```
+## class      : RasterLayer 
+## dimensions : 20880, 43200, 902016000  (nrow, ncol, ncell)
+## resolution : 0.008333333, 0.008333333  (x, y)
+## extent     : -180.0001, 179.9999, -90.00014, 83.99986  (xmin, xmax, ymin, ymax)
+## crs        : +proj=longlat +datum=WGS84 +no_defs 
+## source     : C:/projects-r-web/slides/2020-11-07-correlcon/data/CHELSA_prec_11_V1.2_land.tif 
+## names      : CHELSA_prec_11_V1.2_land 
+## values     : -32768, 32767  (min, max)
+```
+
+
+]
+
+.panel[.panel-name[plot]
+
+
+```r
+plot(rr)
+```
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-14-1.png" width="800px" height="400px" /&gt;
+
+]
+
+.panel[.panel-name[crop]
+
+The raster package is still using sp (*Spatial*) classes, but no worries.
+
+
+```r
+rr_crop &lt;- crop(rr, as(sf_polygons, "Spatial"))
+rr_mask &lt;- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+```
+
+```r
+mapview(list(rr_crop, rr_mask))
+```
+
+
+]
+
+
+
+.panel[.panel-name[multiple layers]
+
+Rasters can contain multiple layers (think cube or 3D array instead of 2D).
+
+`raster()` reads by default the first layer (band), but can be changed with `raster(x, band = .)`
+
+To read in all layers of a file, use `brick()`. Then there is `stack()` which can create a collection of layers from multiple objects or multiple files. (necessary to have the same extent and resolution)
+
+
+
+]
+
+
+  
+]
+
+
+
+
+---
+
+## Combining vector with raster
+
+
+
+.panelset[
+  
+  
+.panel[.panel-name[points]
+
+
+```r
+nov_prec &lt;- extract(rr, as(sf_points, "Spatial"))
+str(nov_prec) # only values
+```
+
+```
+##  num [1:7343] 106 97 100 92 85 24 17 22 10 12 ...
+```
+
+```r
+sf_points2 &lt;- sf_points %&gt;% mutate(nov_prec = nov_prec) # add them to the sf_points
+```
+
+
+]
+
+
+.panel[.panel-name[points example]
+
+
+```r
+# show the wettest cities in Germany in November
+sf_points2 %&gt;% 
+  select(nameascii, adm0_a3, nov_prec) %&gt;% 
+  filter(adm0_a3 == "DEU") %&gt;% 
+  arrange(-nov_prec)
+```
+
+```
+## Simple feature collection with 58 features and 3 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: 6.750017 ymin: 47.85035 xmax: 14.32997 ymax: 54.78375
+## geographic CRS: WGS 84
+## First 10 features:
+##      nameascii adm0_a3 nov_prec                  geometry
+## 1     Freiburg     DEU       94 POINT (7.869948 48.00042)
+## 2    Wuppertal     DEU       90 POINT (7.169991 51.25001)
+## 3  Saarbrucken     DEU       80 POINT (6.970003 49.25039)
+## 4    Rosenheim     DEU       80 POINT (12.13331 47.85035)
+## 5   Heidelberg     DEU       79 POINT (8.699975 49.41999)
+## 6    Flensburg     DEU       77 POINT (9.433315 54.78375)
+## 7         Kiel     DEU       76 POINT (10.13002 54.33039)
+## 8        Essen     DEU       73    POINT (7.016615 51.45)
+## 9        Emden     DEU       72 POINT (7.216655 53.36668)
+## 10 Bremerhaven     DEU       72 POINT (8.579982 53.55044)
+```
+
+
+]
+
+
+
+
+.panel[.panel-name[raster to data.frame]
+
+We take the smallest (masked) raster. Things can get quite big, so watch out.
+
+
+```r
+df_rr_mask &lt;- as.data.frame(rr_mask, xy = T, na.rm = T)
+tibble(df_rr_mask)
+```
+
+```
+## # A tibble: 93,826 x 3
+##        x     y CHELSA_prec_11_V1.2_land
+##    &lt;dbl&gt; &lt;dbl&gt;                    &lt;int&gt;
+##  1  16.3  46.5                       76
+##  2  16.3  46.5                       76
+##  3  16.4  46.5                       75
+##  4  16.4  46.5                       74
+##  5  16.4  46.5                       74
+##  6  16.3  46.5                       76
+##  7  16.3  46.5                       76
+##  8  16.3  46.5                       77
+##  9  16.3  46.5                       77
+## 10  16.3  46.5                       76
+## # ... with 93,816 more rows
+```
+
+
+
+]
+
+
+
+.panel[.panel-name[polygons]
+
+Option A: Use `extract()` as in the points case.
+
+Option B: Rasterize the shape file, and then use raster operations or coerce to data.frame.
+
+
+```r
+rr_polygons &lt;- rasterize(as(sf_polygons, "Spatial"), rr_mask)
+rr_polygons
+```
+
+```
+## class      : RasterLayer 
+## dimensions : 500, 713, 356500  (nrow, ncol, ncell)
+## resolution : 0.008333333, 0.008333333  (x, y)
+## extent     : 13.49153, 19.43319, 42.38319, 46.54986  (xmin, xmax, ymin, ymax)
+## crs        : +proj=longlat +datum=WGS84 +no_defs 
+## source     : memory
+## names      : layer 
+## values     : 1, 21  (min, max)
+## attributes :
+##        ID GID_0  NAME_0    GID_1                 NAME_1         VARNAME_1
+##  from:  1   HRV Croatia  HRV.1_1 Bjelovarska-Bilogorska Bjelovar-Bilagora
+##   to : 21   HRV Croatia HRV.21_1             Zagrebacka            Zagreb
+##  NL_NAME_1   TYPE_1 ENGTYPE_1 CC_1 HASC_1
+##       &lt;NA&gt; Županija    County &lt;NA&gt;  HR.BB
+##       &lt;NA&gt; Županija    County &lt;NA&gt;  HR.ZG
+```
+
+]
+
+
+
+.panel[.panel-name[polygons example]
+
+
+```r
+plot(rr_polygons)
+```
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-21-1.png" height="400px" /&gt;
+
+
+]
+
+
+]
+
+
+
+
+
+
+
+---
+
+## Further topics not covered here
+
+
+**Spatial operations**
+
+  - vector: set operations, transformations
+  - raster: functions on cell values, layers, ...
+
+
+**Reprojecting**
+
+  - necessary for data analysis when data comes in different projections (just for visualization not always needed)
+  - for raster data, this usually involves interpolation (nearest neighbour, bilinear, ...)
+
+**File formats**
+
+  - Shape files (`.shp`) and GeoTIFFs (`.tif`) are most common
+  - For climate grids standard is NetCDF (`.nc`)
+  - but also other formats in the wild: GeoJSON, ...
+
+&lt;!--
+**Spatial statistics**
+
+  - spatial correlation
+  - variograms
+  - kriging
+
+**Satellite image analysis**
+
+  - layer (band) operations
+  - classification
+  - nice intro at last WhyR conference:  
+--&gt;
+
+
+---
+
+## Links
+
+  - Actually a dataviz book. Only one section on geodata, but very concise:&lt;br&gt;
+  Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/
+
+  - In depth view of spatial data analysis with R:&lt;br&gt;
+  Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*, https://geocompr.robinlovelace.net/
+  
+  - For the hard-core technical stuff:&lt;br&gt;
+  Spatial Data Science with R — R Spatial, https://rspatial.org/
+
+
+---
+
+class: center, middle
+
+# `? -&gt; ! -&gt; ???`
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
