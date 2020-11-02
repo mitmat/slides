@@ -15,7 +15,7 @@
 class: center, middle, inverse, title-slide
 
 # Introduction to Geodata in R
-## Session: Working with Geospatial Data
+## CORRELCON 2020
 ### Michael Matiu
 ### 2020/11/07
 
@@ -171,7 +171,7 @@ Two types of coordinate systems:
 
 Conversion between these two, and between all projections handled by PROJ library. 
 
-Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs") or as EPSG code (e.g. 4326). 
+Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs"), as EPSG code (e.g. 4326) or as WKT (well-known text representation of CRS). 
 
 
 
@@ -214,7 +214,8 @@ Quick exploration: **mapview**
 
 ### And a ton of other packages...
 
-...for any need you might imagine. 
+...for any need you might imagine. `-&gt;` [talk by Alexandra](https://alexandrakapp.github.io/correlcon_presentation/#/)
+
 
 
 
@@ -323,15 +324,20 @@ st_bbox(sf_polygons)
 ```
 
 ```r
-raster::projection(sf_polygons) # proj4string
+# st_crs(sf_polygons) # CRS object
+st_crs(sf_polygons)$epsg
+```
+
+```
+## [1] 4326
+```
+
+```r
+st_crs(sf_polygons)$proj4string
 ```
 
 ```
 ## [1] "+proj=longlat +datum=WGS84 +no_defs"
-```
-
-```r
-# st_crs(sf_polygons) # CRS object
 ```
 
 
@@ -393,10 +399,13 @@ mapview(sf_polygons)
 
 ---
 
-## Points, lines, and polygons
+## More vector data and operations
 
 
+.panelset[
 
+
+.panel[.panel-name[points &amp; lines]
 
 
 ```r
@@ -426,29 +435,13 @@ sf_lines &lt;- st_read("data/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_c
 ## geographic CRS: WGS 84
 ```
 
+]
+
+.panel[.panel-name[cropping &amp; intersecting]
 
 
-
-
-```r
-mapview(list(sf_points, sf_lines, sf_polygons))
-```
-
-
-
-
-
-
-
----
-
-
-
-## Cropping &amp; intersecting
-
-crop = bounding box (rectangle)
-
-intersection = within polygon
+  - crop: bounding box (rectangle)
+  - intersection: within polygon
 
 
 
@@ -458,10 +451,43 @@ sf_points_intersect &lt;- st_intersection(sf_points, sf_polygons)
 ```
 
 
-
 ```r
 mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
 ```
+
+
+]
+
+
+.panel[.panel-name[mapview multiple]
+
+
+
+```r
+sf_lines_crop &lt;- st_crop(sf_lines, sf_polygons)
+```
+
+
+```r
+mapview(list(sf_points_crop, sf_lines_crop, sf_polygons))
+```
+
+]
+
+
+
+
+
+]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -471,18 +497,45 @@ mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
 
 ---
 
-## ggplot2: geom_sf
+## ggplot2 integration
+
+.panelset[
 
 
+.panel[.panel-name[intro]
+
+The **sf** package provides three geoms and a coord.
+
+  - `geom_sf()` is used for points, lines, and polygons. Draws the appropriate geom depending on feature.
+  - `geom_sf_text()` and `geom_sf_label()` for text and labels.
+  - `coord_sf()` makes sure that all layers use a common CRS. By default, takes the CRS the first `geom_sf()`, but can be overridden. 
+
+The **stars** packages provides `geom_stars()`. Important argument is `downsample=`, which allows to plot only every x-th value (the plot function for raster has by default a `maxpixels=500000` argument). 
+
+]
+
+
+.panel[.panel-name[code]
 
 ```r
 ggplot()+
   geom_sf(data = sf_polygons)+
   geom_sf(data = sf_points_intersect, aes(size = pop_max/1000))+
+  coord_sf()+ # optional
   theme_minimal()
 ```
 
-&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-11-1.png" height="450px" /&gt;
+]
+
+.panel[.panel-name[plot]
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-12-1.png" height="450px" /&gt;
+
+]
+
+
+]
+
 
 
 ---
@@ -556,27 +609,42 @@ rr
 plot(rr)
 ```
 
-&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-14-1.png" width="800px" height="400px" /&gt;
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-15-1.png" width="800px" height="400px" /&gt;
 
 ]
 
 .panel[.panel-name[crop]
 
-The raster package is still using sp (*Spatial*) classes, but no worries.
+Cropping is again for the bbox. The raster package is still using sp (*Spatial*) classes, but no worries.
 
 
 ```r
 rr_crop &lt;- crop(rr, as(sf_polygons, "Spatial"))
-rr_mask &lt;- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+plot(rr_crop)
 ```
 
-```r
-mapview(list(rr_crop, rr_mask))
-```
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-16-1.png" height="350px" /&gt;
+
 
 
 ]
 
+
+.panel[.panel-name[mask]
+
+Masking is similar to intersection for `sf`.
+
+
+```r
+rr_mask &lt;- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+plot(rr_mask)
+```
+
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-17-1.png" height="350px" /&gt;
+
+
+
+]
 
 
 .panel[.panel-name[multiple layers]
@@ -633,9 +701,9 @@ sf_points2 &lt;- sf_points %&gt;% mutate(nov_prec = nov_prec) # add them to the 
 ```r
 # show the wettest cities in Germany in November
 sf_points2 %&gt;% 
-  select(nameascii, adm0_a3, nov_prec) %&gt;% 
-  filter(adm0_a3 == "DEU") %&gt;% 
-  arrange(-nov_prec)
+  dplyr::select(nameascii, adm0_a3, nov_prec) %&gt;% 
+  dplyr::filter(adm0_a3 == "DEU") %&gt;% 
+  dplyr::arrange(-nov_prec)
 ```
 
 ```
@@ -738,7 +806,7 @@ rr_polygons
 plot(rr_polygons)
 ```
 
-&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-21-1.png" height="400px" /&gt;
+&lt;img src="intro-spatial-r_files/figure-html/unnamed-chunk-22-1.png" height="400px" /&gt;
 
 
 ]
@@ -772,7 +840,8 @@ plot(rr_polygons)
 
   - Shape files (`.shp`) and GeoTIFFs (`.tif`) are most common
   - For climate grids standard is NetCDF (`.nc`)
-  - but also other formats in the wild: GeoJSON, ...
+  - but also other formats in the wild: GeoJSON (`.geojson`), Ascii (`.asc`), KML (`.kml`), ...
+  - and integration into databases (e.g. PostGIS `-&gt;` talk by Malte)
 
 &lt;!--
 **Spatial statistics**
@@ -793,13 +862,13 @@ plot(rr_polygons)
 
 ## Links
 
-  - Actually a dataviz book. Only one section on geodata, but very concise:&lt;br&gt;
+  - Actually a dataviz book. Only one section on geodata, but very concise:&lt;br&gt;&lt;br&gt;
   Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/
 
-  - In depth view of spatial data analysis with R:&lt;br&gt;
+  - In depth view of spatial data analysis with R:&lt;br&gt;&lt;br&gt;
   Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*, https://geocompr.robinlovelace.net/
   
-  - For the hard-core technical stuff:&lt;br&gt;
+  - For the hard-core technical stuff:&lt;br&gt;&lt;br&gt;
   Spatial Data Science with R — R Spatial, https://rspatial.org/
 
 
@@ -808,11 +877,6 @@ plot(rr_polygons)
 class: center, middle
 
 # `? -&gt; ! -&gt; ???`
-
-
-
-
-
 
 
 

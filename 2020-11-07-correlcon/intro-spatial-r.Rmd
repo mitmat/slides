@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Geodata in R"
-subtitle: "Session: Working with Geospatial Data"
+subtitle: "CORRELCON 2020"
 author: "Michael Matiu"
 institute: ""
 date: "2020/11/07"
@@ -183,7 +183,7 @@ Two types of coordinate systems:
 
 Conversion between these two, and between all projections handled by PROJ library. 
 
-Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs") or as EPSG code (e.g. 4326). 
+Information on CRS usually given as proj4string (e.g. "+proj=longlat +datum=WGS84 +no_defs"), as EPSG code (e.g. 4326) or as WKT (well-known text representation of CRS). 
 
 
 
@@ -226,7 +226,8 @@ Quick exploration: **mapview**
 
 ### And a ton of other packages...
 
-...for any need you might imagine. 
+...for any need you might imagine. `->` [talk by Alexandra](https://alexandrakapp.github.io/correlcon_presentation/#/)
+
 
 
 
@@ -287,8 +288,10 @@ print(sf_polygons, n = 5) # print only first 5 instead of default 10 features
 
 ```{r}
 st_bbox(sf_polygons)
-raster::projection(sf_polygons) # proj4string
 # st_crs(sf_polygons) # CRS object
+st_crs(sf_polygons)$epsg
+st_crs(sf_polygons)$proj4string
+
 ``` 
 
 
@@ -334,10 +337,13 @@ mapview(sf_polygons)
 
 ---
 
-## Points, lines, and polygons
+## More vector data and operations
 
 
+.panelset[
 
+
+.panel[.panel-name[points & lines]
 
 ```{r}
 # naturalearth cities & rivers
@@ -345,28 +351,13 @@ sf_points <- st_read("data/ne_10m_populated_places_simple/ne_10m_populated_place
 sf_lines <- st_read("data/ne_10m_rivers_lake_centerlines/ne_10m_rivers_lake_centerlines.shp")
 ```  
 
+]
+
+.panel[.panel-name[cropping & intersecting]
 
 
-
-```{r, eval=FALSE}
-mapview(list(sf_points, sf_lines, sf_polygons))
-``` 
-
-
-
-
-
-
-
----
-
-
-
-## Cropping & intersecting
-
-crop = bounding box (rectangle)
-
-intersection = within polygon
+  - crop: bounding box (rectangle)
+  - intersection: within polygon
 
 
 ```{r, warning=FALSE, message=FALSE}
@@ -374,10 +365,41 @@ sf_points_crop <- st_crop(sf_points, sf_polygons)
 sf_points_intersect <- st_intersection(sf_points, sf_polygons)
 ```
 
-
 ```{r, eval=FALSE}
 mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
 ```
+
+
+]
+
+
+.panel[.panel-name[mapview multiple]
+
+
+```{r, warning=FALSE, message=FALSE}
+sf_lines_crop <- st_crop(sf_lines, sf_polygons)
+``` 
+
+```{r, eval=FALSE}
+mapview(list(sf_points_crop, sf_lines_crop, sf_polygons))
+``` 
+
+]
+
+
+
+
+
+]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -387,15 +409,35 @@ mapview(list(sf_points_crop, sf_points_intersect, sf_polygons))
 
 ---
 
-## ggplot2: geom_sf
+## ggplot2 integration
+
+.panelset[
 
 
-```{r out.height='450px'}
+.panel[.panel-name[intro]
+
+The **sf** package provides three geoms and a coord.
+
+  - `geom_sf()` is used for points, lines, and polygons. Draws the appropriate geom depending on feature.
+  - `geom_sf_text()` and `geom_sf_label()` for text and labels.
+  - `coord_sf()` makes sure that all layers use a common CRS. By default, takes the CRS the first `geom_sf()`, but can be overridden. 
+
+The **stars** packages provides `geom_stars()`. Important argument is `downsample=`, which allows to plot only every x-th value (the plot function for raster has by default a `maxpixels=500000` argument). 
+
+]
+
+
+```{r panelset = c(source = "code", output = "plot"), out.height='450px'}
 ggplot()+
   geom_sf(data = sf_polygons)+
   geom_sf(data = sf_points_intersect, aes(size = pop_max/1000))+
+  coord_sf()+ # optional
   theme_minimal()
 ```
+
+
+]
+
 
 
 ---
@@ -447,19 +489,30 @@ plot(rr)
 
 .panel[.panel-name[crop]
 
-The raster package is still using sp (*Spatial*) classes, but no worries.
+Cropping is again for the bbox. The raster package is still using sp (*Spatial*) classes, but no worries.
 
-```{r}
+```{r, out.height='350px'}
 rr_crop <- crop(rr, as(sf_polygons, "Spatial"))
-rr_mask <- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+plot(rr_crop)
 ```
-```{r, eval=FALSE}
-mapview(list(rr_crop, rr_mask))
-```
+
 
 
 ]
 
+
+.panel[.panel-name[mask]
+
+Masking is similar to intersection for `sf`.
+
+```{r, out.height='350px'}
+rr_mask <- mask(rr_crop, as(sf_polygons, "Spatial")) # mask is faster, when pre-cropped
+plot(rr_mask)
+```
+
+
+
+]
 
 
 .panel[.panel-name[multiple layers]
@@ -507,9 +560,9 @@ sf_points2 <- sf_points %>% mutate(nov_prec = nov_prec) # add them to the sf_poi
 ```{r}
 # show the wettest cities in Germany in November
 sf_points2 %>% 
-  select(nameascii, adm0_a3, nov_prec) %>% 
-  filter(adm0_a3 == "DEU") %>% 
-  arrange(-nov_prec)
+  dplyr::select(nameascii, adm0_a3, nov_prec) %>% 
+  dplyr::filter(adm0_a3 == "DEU") %>% 
+  dplyr::arrange(-nov_prec)
 ```
 
 
@@ -586,7 +639,8 @@ plot(rr_polygons)
 
   - Shape files (`.shp`) and GeoTIFFs (`.tif`) are most common
   - For climate grids standard is NetCDF (`.nc`)
-  - but also other formats in the wild: GeoJSON, ...
+  - but also other formats in the wild: GeoJSON (`.geojson`), Ascii (`.asc`), KML (`.kml`), ...
+  - and integration into databases (e.g. PostGIS `->` talk by Malte)
 
 <!--
 **Spatial statistics**
@@ -607,13 +661,13 @@ plot(rr_polygons)
 
 ## Links
 
-  - Actually a dataviz book. Only one section on geodata, but very concise:<br>
+  - Actually a dataviz book. Only one section on geodata, but very concise:<br><br>
   Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/
 
-  - In depth view of spatial data analysis with R:<br>
+  - In depth view of spatial data analysis with R:<br><br>
   Robin Lovelace, Jakub Nowosad, Jannes Muenchow, *Geocomputation with R*, https://geocompr.robinlovelace.net/
   
-  - For the hard-core technical stuff:<br>
+  - For the hard-core technical stuff:<br><br>
   Spatial Data Science with R — R Spatial, https://rspatial.org/
 
 
@@ -622,19 +676,6 @@ plot(rr_polygons)
 class: center, middle
 
 # `? -> ! -> ???`
-
-
-
-```{r mapshots, echo=F, eval=F}
-mapshot(mapview(sf_polygons), "extra/mapview_01_sf_polygons.html")
-mapshot(mapview(list(sf_points, sf_lines, sf_polygons)),
-        "extra/mapview_02_list_sf.html")
-mapshot(mapview(list(sf_points_crop, sf_points_intersect, sf_polygons)),
-        "extra/mapview_03_crop_intersect.html")
-mapshot(mapview(list(rr_crop, rr_mask)),
-        "extra/mapview_04_raster_crop.html")
-```
-
 
 
 
