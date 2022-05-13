@@ -1,0 +1,48 @@
+---
+title: "How to manage code and data for open science (and yourself)"
+subtitle: "EGU22 - SC3.13 -  Open science beyond open-access publications: how can we share our code and data?"
+author: "Michael Matiu"
+institute: ""
+date: "2022/05/26"
+output:
+  xaringan::moon_reader:
+    css: [default, css/extra.css]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_panelset()
+
+```
+
+
+## Foreword
+
+
+Slides available at https://mitmat.github.io/slides/
+
+
+Data = any information in general, focus on digital
+
+
+Code = anything you do to data, regardless of means (R, python, Excel, ...)
+
+
+Files/folders
+
+
+---
+
+class: center, middle
+
+# `? -> ! -> ???`
+
+
+
+
