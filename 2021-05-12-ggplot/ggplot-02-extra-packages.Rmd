@@ -1,0 +1,140 @@
+---
+title: "Extra ggplot2 packages"
+subtitle: "Advanced plotting in R 2021"
+author: "Michael Matiu"
+institute: ""
+date: "2021/05/11"
+output:
+  xaringan::moon_reader:
+    css: [default, css/extra.css]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_panelset()
+
+library(tidyverse)
+
+```
+
+
+## ggcorrplot: visualization of correlation matrices
+
+
+```{r eval=FALSE}
+corr <- round(cor(mtcars), 1)
+ggcorrplot(corr, hc.order = TRUE, type = "lower", lab = TRUE)
+```
+
+
+
+<img width=40% height=40% src="http://www.sthda.com/sthda/RDoc/figure/ggplot2/ggcorrplot-demo-ggcorrplot-7.png">
+
+.tiny[Source: http://www.sthda.com/english/wiki/ggcorrplot-visualization-of-a-correlation-matrix-using-ggplot2]
+
+---
+
+
+## ggalt: extra stuff, more geoms, ...
+
+
+.panelset[
+.panel[.panel-name[encircle points]
+
+<img width=50% height=50% src="https://raw.githubusercontent.com/hrbrmstr/ggalt/master/README_figs/README-encircle-3.png">
+
+.tiny[Source: https://github.com/hrbrmstr/ggalt]
+
+
+
+]
+
+
+.panel[.panel-name[lollipop]
+
+<img width=50% height=50% src="https://raw.githubusercontent.com/hrbrmstr/ggalt/master/README_figs/README-lollipop-1.png">
+
+
+.tiny[Source: https://github.com/hrbrmstr/ggalt]
+
+
+]
+
+
+.panel[.panel-name[dumbbell]
+
+
+<img width=50% height=50% src="https://raw.githubusercontent.com/hrbrmstr/ggalt/master/README_figs/README-dumbbell-1.png">
+
+.tiny[Source: https://github.com/hrbrmstr/ggalt]
+
+
+]
+]
+
+
+---
+
+
+
+## ggrepel: no overlapping text labels
+
+<img src="https://ggrepel.slowkow.com/articles/examples_files/figure-html/comparison-1.png">
+
+.tiny[Source: https://ggrepel.slowkow.com/articles/examples.html]
+
+
+
+---
+
+
+
+## ggforce: accelarating ggplot
+
+
+
+.panelset[
+.panel[.panel-name[parallel sets]
+
+<img width=50% height=50% src="https://ggforce.data-imaginist.com/reference/geom_parallel_sets-1.png">
+
+.tiny[Source: https://ggforce.data-imaginist.com/reference/geom_parallel_sets.html]
+
+]
+
+
+
+.panel[.panel-name[mark and enclose points]
+
+<img width=50% height=50% src="https://ggforce.data-imaginist.com/reference/geom_mark_ellipse-2.png">
+
+.tiny[Source: https://ggforce.data-imaginist.com/reference/geom_mark_ellipse.html]
+
+]
+
+
+.panel[.panel-name[facet_zoom]
+
+
+<img width=50% height=50% src="https://ggforce.data-imaginist.com/reference/facet_zoom-2.png">
+
+.tiny[Source: https://ggforce.data-imaginist.com/reference/facet_zoom.html]
+
+]
+
+
+.panel[.panel-name[facet_matrix]
+
+<img width=50% height=50% src="https://ggforce.data-imaginist.com/reference/facet_matrix-1.png">
+
+.tiny[Source: https://ggforce.data-imaginist.com/reference/facet_matrix.html]
+
+]
+]
+

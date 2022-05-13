@@ -1,0 +1,132 @@
+---
+title: "Basics in design"
+subtitle: "Advanced plotting in R 2021"
+author: "Michael Matiu"
+institute: ""
+date: "2021/05/11"
+output:
+  xaringan::moon_reader:
+    css: [default, css/extra.css]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_panelset()
+
+library(tidyverse)
+
+```
+
+
+
+## Choice of color scales
+
+<img width=80% src="https://blogs.egu.eu/divisions/gd/files/2017/08/rainbow_errantscience_header-01-1400x800.jpg">
+
+.tiny[Source: Matthew Partridge of ErrantScience.com]
+
+---
+
+
+## NEVER use the rainbow for science
+
+
+<img src="http://blogs.reading.ac.uk/climate-lab-book/files/2016/04/davis.gif">
+
+.tiny[Source: https://www.climate-lab-book.ac.uk/2016/why-rainbow-colour-scales-can-be-misleading/]
+
+
+
+---
+
+## Avoid static 3d plots
+
+
+<img width=45% src="https://i.stack.imgur.com/8vJmN.png">
+
+.tiny[Source: https://stackoverflow.com/questions/26794236/ggplot2-3d-bar-plot]
+
+
+
+---
+
+
+
+## Use background grids sparingly
+
+<img width=70% src="https://clauswilke.com/dataviz/balance_data_context_files/figure-html/Aus-athletes-grid-bad-1.png">
+
+.tiny[Source: https://clauswilke.com/dataviz/balance-data-context.html#providing-the-appropriate-amount-of-context]
+
+
+
+
+---
+
+
+## Try to avoid using rotated text 
+
+
+(bars and boxplots work perfectly also in horizontal layout)
+
+.pull-left[
+
+<img width=70% src="https://clauswilke.com/dataviz/visualizing_amounts_files/figure-html/boxoffice-rot-axis-tick-labels-1.png">
+
+
+]
+
+.pull-right[
+
+<img src="https://clauswilke.com/dataviz/visualizing_amounts_files/figure-html/boxoffice-horizontal-1.png">
+
+]
+
+.tiny[Source: https://clauswilke.com/dataviz/visualizing-amounts.html#bar-plots]
+
+
+
+---
+
+
+## Other things
+
+- some redundancy (e.g. color & shape) is good
+- employ consistency in the case of multiple figures (e.g. same colors for same things)
+- use red-green-colorblind safe color scales
+
+
+Additionally, for general audience:
+
+- be aware of the emotional impact of color (https://thecorrespondent.com/664/how-maps-in-the-media-make-us-more-negative-about-migrants/738023272448-bac255ba)
+- instead of legends on the side, try annotating the plot directly
+- make the plot understandable without captions (e.g. annotations, examples, interpretations)
+
+
+
+More info:
+- https://clauswilke.com/dataviz/
+- https://z3tt.github.io/bespokeDS/
+- https://github.com/z3tt/ggplot-courses
+- https://www.rstudio.com/resources/rstudioconf-2020/the-glamour-of-graphics/
+
+
+
+---
+
+
+## Accuracy in the interpretation of aesthetics
+
+
+<img width=30% height=30% src="https://paldhous.github.io/ucb/2019/dataviz/img/class2_2.jpg">
+
+.tiny[Source: https://paldhous.github.io/ucb/2019/dataviz/week2.html based on Cleveland and McGill, 1985, *Graphical Perception and Graphical Models for Analyzing Scientific Data*]
+
+
+

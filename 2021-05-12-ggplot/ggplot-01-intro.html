@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Michael Matiu" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to ggplot2
+## Advanced plotting in R 2021
+### Michael Matiu
+### 2021/05/11
+
+---
+
+
+
+
+
+## Content
+
+.pull-left[
+
+### Block 1 (Intro and EDA)
+
+- Fundamentals of ggplot2
+    + Data
+    + Language
+- Building blocks
+    + Mapping
+    + Layering
+    + Facetting
+- ggplot2 for EDA (exploratory data analysis)
+- some other gg packages
+
+**HANDS ON DATA**
+
+]
+
+.pull-right[
+
+### Block 2 (publication-ready plots)
+
+- Basics of design
+- Styling of ggplots
+- Arranging multiple ggplots
+- Annotating
+- Polishing
+
+
+**HANDS ON DATA**
+]
+
+
+
+---
+
+
+## What is ggplot2?
+
+
+Declarative plotting system built around the [Grammar of Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=sr_1_1?dchild=1&amp;keywords=the+grammar+of+graphics&amp;qid=1620283819&amp;sr=8-1).
+
+Created by Hadley Wickham some 10 years ago.
+
+
+Declarative means: You need to define links to data, and ggplot will take care of the rest (axes, limits, scales, colours, labels, legends, ...). 
+
+
+
+
+
+
+---
+
+
+## Why ggplot2?
+
+
+Good:
++ easy to explore different visualizations
++ sensible default scales (x, y, colour, ...)
++ automatic legends
++ allows fast data exploration of multi-dimensional data by using different aesthetics (position, colour, shape, size, ...) and facetting
++ all-in-one-solution: good for both EDA (exploratory data analysis) and publication-ready figures
+
+
+Bad:
+- fine-tuning can be tedious
+- sometimes, if you want to override ggplot2 defaults, it can be hacky or impossible
+
+
+
+
+
+
+---
+
+
+## Tidy data
+
+ggplot2 is built around **tidy** data sets (data.frame, tibble, data.table).
+
+
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png"&gt;
+
+.tiny[R4DS, https://r4ds.had.co.nz/tidy-data.html#tidy-data-1]
+
+
+
+
+---
+
+
+## Data wrangling: Observations in columns
+
+
+
+```r
+table4 %&gt;% 
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
+```
+
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/3aea19108d39606bbe49981acda07696c0c7fcd8/2de65/images/tidy-9.png"&gt;
+
+.tiny[R4DS, https://r4ds.had.co.nz/tidy-data.html#longer]
+
+
+
+
+
+---
+
+
+## Data wrangling: Observations scattered across rows
+
+
+
+```r
+table2 %&gt;% 
+  pivot_wider(names_from = key, values_from = value)
+```
+
+
+&lt;img width=70% height=70% src="https://d33wubrfki0l68.cloudfront.net/8350f0dda414629b9d6c354f87acf5c5f722be43/bcb84/images/tidy-8.png"&gt;
+
+.tiny[R4DS, https://r4ds.had.co.nz/tidy-data.html#wider]
+
+
+
+
+---
+
+
+
+
+## Data wrangling: Transformation
+
+
+
+```r
+# select observations
+flights %&gt;% 
+  filter(month == 1, day == 1)
+
+# create new columns
+flights %&gt;% 
+  mutate(gain = dep_delay - arr_delay,
+         speed = distance / air_time * 60)
+
+# summarize by groups
+flights %&gt;% 
+  group_by(year, month, day) %&gt;% 
+  summarise(delay = mean(dep_delay, na.rm = TRUE))
+```
+
+
+
+
+
+
+---
+
+
+
+## ggplot2 components and language
+
+
+#### Minimally required
+
+
+- A default dataset 
+- Set of mappings from variables to aesthetics
+- One or more layers, each composed of 
+    + a geometric object
+
+
+#### Optional (to override defaults)
+
+- For each layer
+    + a statistical transformation
+    + a position adjustment
+    + optionally, different dataset and aesthetic mappings
+- One scale for each aesthetic mapping
+- A coordinate system
+- The faceting specification
+
+
+
+---
+
+
+## Aesthetics
+
+Describe graphical elements
+
+Continuous vs. discrete
+
+
+&lt;img width=80% height=80% src="https://clauswilke.com/dataviz/aesthetic_mapping_files/figure-html/common-aesthetics-1.png"&gt;
+
+
+.tiny[Source: Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/aesthetic-mapping.html]
+
+
+
+---
+
+
+## Scales
+
+Map data values onto aesthetics
+
+
+
+&lt;img src="https://clauswilke.com/dataviz/aesthetic_mapping_files/figure-html/basic-scales-example-1.png"&gt;
+
+.tiny[Source: Claus O. Wilke, *Fundamentals of Data Visualization*, https://clauswilke.com/dataviz/aesthetic-mapping.html#scales-map-data-values-onto-aesthetics]
+
+
+
+
+
+---
+
+
+## Geoms - Basic building blocks
+
+
+&lt;img width=20% height=20% src="https://ggplot2-book.org/individual-geoms_files/figure-html/geom-basic-1.png"&gt;
+&lt;img width=20% height=20% src="https://ggplot2-book.org/individual-geoms_files/figure-html/geom-basic-2.png"&gt;
+&lt;img width=20% height=20% src="https://ggplot2-book.org/individual-geoms_files/figure-html/geom-basic-3.png"&gt;
+&lt;img width=20% height=20% src="https://ggplot2-book.org/individual-geoms_files/figure-html/geom-basic-4.png"&gt;
+
+&lt;img width=20% height=20%  src="https://ggplot2-book.org/individual-geoms_files/figure-html/unnamed-chunk-2-1.png"&gt;
+&lt;img width=20% height=20%  src="https://ggplot2-book.org/individual-geoms_files/figure-html/unnamed-chunk-2-2.png"&gt;
+&lt;img width=20% height=20%  src="https://ggplot2-book.org/individual-geoms_files/figure-html/unnamed-chunk-2-3.png"&gt;
+&lt;img width=20% height=20%  src="https://ggplot2-book.org/individual-geoms_files/figure-html/unnamed-chunk-2-4.png"&gt;
+
+.tiny[Source: Hadley Wickham, *ggplot2 book*, https://ggplot2-book.org/individual-geoms.html]
+
+
+
+
+
+
+---
+
+
+## Code structure
+
+
+
+```r
+ggplot(data = &lt;DATA&gt;)+ # REQUIRED
+  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;), # REQUIRED
+                  stat = &lt;STAT&gt;, position = &lt;POSITION&gt;)+ # optional
+  &lt;COORDINATE_FUNCTION&gt;+ # optional
+  &lt;FACET_FUNCTION&gt;+ # optional
+  &lt;SCALE_FUNCTION&gt;+ # optional
+  &lt;THEME_FUNCTION&gt; # optional
+```
+
+
+
+---
+
+
+## Layering
+
+
+.panelset[
+.panel[.panel-name[Base]
+
+.pull-left[
+
+
+```r
+*ggplot(mpg, aes(displ, hwy))
+```
+
+
+]
+
+.pull-right[
+
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+
+]
+
+]
+
+
+.panel[.panel-name[1 geom]
+.pull-left[
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+* geom_point()
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+]
+
+.panel[.panel-name[2 geoms]
+.pull-left[
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+  geom_point()+
+* geom_smooth()
+```
+
+
+]
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
+]
+
+.panel[.panel-name[3 geoms]
+.pull-left[
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+  geom_point()+
+  geom_smooth()+
+* geom_hline(yintercept = 30, linetype = "dashed")
+```
+
+
+]
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+]
+]
+
+
+]
+
+
+
+---
+
+
+## Inheritance of aes()
+
+
+All of these produce the same plot:
+
+
+```r
+ggplot(mpg, aes(displ, hwy, colour = class)) + 
+  geom_point()
+
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point(aes(colour = class))
+
+ggplot(mpg, aes(displ)) + 
+  geom_point(aes(y = hwy, colour = class))
+
+ggplot(mpg) + 
+  geom_point(aes(displ, hwy, colour = class))
+```
+
+Within each layer you can add, override, or remove (set to `NULL`).
+
+
+
+
+---
+
+
+
+## Setting vs. mapping of aesthetics
+
+
+
+
+
+.panelset[
+
+
+.panel[.panel-name[Mapping]
+.pull-left[
+
+Within `aes()` the aesthetic is mapped to a variable.
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+* geom_point(aes(colour = drv))
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[Setting]
+.pull-left[
+
+Outside `aes()` the aesthetic is set to a value. Needs to be a possible value then.
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+* geom_point(colour = "darkblue")
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[Setting in aes()]
+.pull-left[
+
+What happens, if we set a value within `aes()`?
+
+
+```r
+ggplot(mpg, aes(displ, hwy))+
+* geom_point(aes(colour = "darkblue"))
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[Mapping constants]
+.pull-left[
+
+One can also "manually" construct mappings. Can be useful in certain cases.
+
+
+```r
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point() +
+* geom_smooth(aes(colour = "loess"),
+              method = "loess", 
+              se = FALSE) + 
+* geom_smooth(aes(colour = "lm"),
+              method = "lm", 
+              se = FALSE)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+]
+
+
+---
+
+
+## Coordinate systems
+
+Not that relevant, since mostly the Cartesian one is used.
+
+However you can force a fixed aspect ratios `coord_fixed()` or use polar coordinates `coord_polar()`.
+
+This flexibility allows easy extension: `coord_sf()` for spatial data (`-&gt;` Mattia).
+
+
+
+---
+
+
+## Facetting - Basics
+
+
+Generate small multiples based on subsets of the data.
+
+Incredibly powerful technique.
+
+ggplot offers two different options:
+
+
+&lt;img src="https://ggplot2-book.org/diagrams/position-facets.png"&gt;
+
+.tiny[Source: ggplot2 book, https://ggplot2-book.org/facet.html]
+
+
+---
+
+## facet_wrap
+
+
+.panelset[
+.panel[.panel-name[base]
+.pull-left[
+
+
+```r
+# some random data
+n_grp &lt;- 8
+n_points &lt;- 10
+
+tbl_wrap &lt;- tibble(
+  grp = rep(LETTERS[1:n_grp], each = n_points),
+  xx = rep(1:n_grp, each = n_points) + 
+    rnorm(n_grp*n_points),
+  yy = rep(n_grp:1, each = n_points) + 
+    rnorm(n_grp*n_points)
+)
+```
+
+
+```r
+# wrap grp
+ggplot(tbl_wrap, aes(xx, yy))+
+  geom_point()+
+* facet_wrap(~grp)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[free scales]
+.pull-left[
+
+
+```r
+ggplot(tbl_wrap, aes(xx, yy))+
+  geom_point()+
+* facet_wrap(~grp, scales = "free")
+```
+
+Also possible to use `"free_x"` or `"free_y"`.
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[nrow ncol]
+.pull-left[
+
+
+```r
+ggplot(tbl_wrap, aes(xx, yy))+
+  geom_point()+
+* facet_wrap(~grp, nrow = 2)
+```
+
+Also possible to specify number of columns with `ncol = `.
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+
+.panel[.panel-name[Order of wrapping]
+.pull-left[
+
+
+```r
+ggplot(tbl_wrap, aes(xx, yy))+
+  geom_point()+
+* facet_wrap(~grp, nrow = 2, dir = "v")
+```
+
+Standard is `dir = "h"`. 
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[Order of elements]
+.pull-left[
+
+The order of facets is determined by the underlying factor. If it's a character vector, then alphabetically. In order to change the order, you need to modify the factor.
+
+
+```r
+tbl_wrap %&gt;% 
+  mutate(grp_f = fct_relevel(factor(grp),
+                             "B", "G", "E", "F", 
+                             "D", "A", "C", "H")) %&gt;%
+  
+  ggplot(aes(xx, yy))+
+  geom_point()+
+  facet_wrap(~grp_f, nrow = 2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+]
+]
+
+]
+
+
+
+
+---
+
+
+## facet_grid
+
+
+.panelset[
+.panel[.panel-name[x ~ .]
+.pull-left[
+
+
+```r
+# some random data
+n_points &lt;- 10
+tbl_grid &lt;- tibble(
+  grp1 = rep(c("A", "B", "C"), each = n_points*3),
+  grp2 = rep(rep(c("X", "Y", "Z"), n_points), 3),
+  xx = rep(1:9, each = n_points) + rnorm(9*n_points),
+  yy = rep(9:1, each = n_points) + rnorm(9*n_points)
+)
+```
+
+
+```r
+# plot
+ggplot(tbl_grid, aes(xx, yy))+
+  geom_point()+
+* facet_grid(grp1 ~ .)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[. ~ y]
+.pull-left[
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy))+
+  geom_point()+
+* facet_grid(. ~ grp2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[x ~ y]
+.pull-left[
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy))+
+  geom_point()+
+* facet_grid(grp1 ~ grp2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[free space]
+.pull-left[
+
+Besides free scales, for `facet_grid` you also have `space =`. So height/width is proportional to range of data.
+
+
+
+```r
+tbl_grid %&gt;% 
+  mutate(yy_shrink = if_else(grp1 == "B", 
+                             (yy - mean(yy))/sd(yy), 
+                             yy)) %&gt;% 
+  
+  ggplot(aes(xx, yy_shrink))+
+  geom_point()+
+  facet_grid(grp1 ~ grp2, 
+             scales = "free", 
+*            space = "free")
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[free space 2]
+.pull-left[
+
+This is especially useful for categorical scales. 
+
+See example on the right from
+
+https://ggplot2-book.org/facet.html#controlling-scales 
+
+
+]
+
+.pull-right[
+&lt;img width=70% height=70% src="https://ggplot2-book.org/facet_files/figure-html/discrete-free-1.png"&gt;
+]
+]
+
+]
+
+
+---
+
+## facets with continuous variables
+
+
+If you want to facet on continuous variables, you need first to discretise it.
+
+ggplot offers three helper functions:
+
+- `cut_width(x, w)` &lt;br&gt; makes bins of the same width `w`
+- `cut_interval(x, n)` &lt;br&gt; makes `n` bins of equal width
+- `cut_number(x, n)` &lt;br&gt; makes `n` bins that approximately contain the same number of observations (with varying width)
+
+
+Or you can use the base `cut()` function, which also allows you manually specify the breaks and labels. 
+
+
+
+---
+
+
+## Grouping vs. facetting
+
+
+
+
+
+.panelset[
+.panel[.panel-name[Question]
+
+
+Should you use groups (e.g. colour) or facets?
+
+The answer is both. 
+
+And ggplot makes it easy to switch and try out all the options.
+
+]
+
+
+.panel[.panel-name[groups]
+.pull-left[
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy, colour = grp2))+
+  geom_point()
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[facets]
+.pull-left[
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy))+
+  geom_point()+
+  facet_grid(. ~ grp2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[both]
+.pull-left[
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy, colour = grp1))+
+  geom_point()+
+  facet_grid(. ~ grp2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-47-1.png)&lt;!-- --&gt;
+]
+]
+
+]
+
+
+
+
+---
+
+
+## saving plots
+
+
+
+.panelset[
+.panel[.panel-name[as R objects]
+
+You can save the call to `ggplot()+...` as R object.
+
+
+```r
+*gg &lt;- ggplot(tbl_wrap, aes(xx, yy))+
+  geom_point()+
+  facet_wrap(~grp)
+```
+
+
+Some people use this to construct a plot sequentially.
+
+
+```r
+gg &lt;- ggplot(tbl_wrap, aes(xx, yy))
+gg &lt;- gg + geom_point()
+gg &lt;- gg + facet_wrap(~grp)
+```
+
+
+
+]
+
+
+.panel[.panel-name[as files]
+
+
+
+```r
+ggsave(
+  filename = "abc.pdf", 
+  plot = gg,
+  width = 6,
+  height = 4
+)
+```
+
+
+- if you omit the `plot = ` argument, then the last plot is saved
+- based on the ending of the filename, ggplot will choose the right device and sage the appropriate file, including PDF, PNG, JPG, TIFF, ...
+- width and height are by default given in inches, but can choose cm or mm with the `units=` argument, e.g. `units = "cm"`
+- tip to determine the plot size: plot it in the RStudio plots pane, use the "Export" button with "Save as PDF", use the "Preview" button, and play around with sizes
+
+]
+
+
+
+
+]
+
+
+
+
+
+---
+
+
+## ggplot for EDA
+
+
+.panelset[
+.panel[.panel-name[Why?]
+
+The ggplot grammar makes it easy to try out and switch between many plots.
+
+- explore many geoms
+- exchange aesthetics
+- use facets
+- exchange facets with aesthetics
+
+
+
+]
+
+
+
+
+.panel[.panel-name[facet more variables]
+.pull-left[
+
+Using `+` you can add multiple groups to facet over
+
+
+```r
+ggplot(tbl_grid, aes(xx, yy))+
+  geom_point()+
+* facet_wrap(~ grp1 + grp2)
+```
+
+
+]
+
+.pull-right[
+![](ggplot-01-intro_files/figure-html/unnamed-chunk-52-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+
+.panel[.panel-name[loop and save]
+
+
+```r
+# get limits
+xl &lt;- range(tbl_wrap$xx)
+yl &lt;- range(tbl_wrap$yy)
+
+# open pdf file (graphics device)
+pdf("gg-loop.pdf", width = 6, height = 4)
+
+# loop through all
+for(i_grp in sort(unique(tbl_wrap$grp))){
+  
+  gg &lt;- tbl_wrap %&gt;% 
+    filter(grp == i_grp) %&gt;% # filter to grp
+    
+    ggplot(aes(xx, yy))+
+    geom_point()+
+    xlim(xl)+ # enforce same limits
+    ylim(yl)+
+    ggtitle(paste0("Group: ", i_grp)) # add some info
+  
+  print(gg) # inside for() loop needs a print() of the gg object
+  
+}
+# close the pdf (device)
+dev.off()
+```
+
+
+]
+
+
+]
+
+
+
+
+
+---
+
+
+## some additional packages
+
+
+`-&gt;` external file
+
+
+
+
+---
+
+
+## Now it's your turn!
+
+
+
+.pull-left[
+
+
+### A) Structured exercises
+
+
+Go to the folder
+
+`02_Ggplot/exercises/`
+
+and start hacking!
+
+Solutions will be provided after the end of the day.
+
+
+
+]
+
+.pull-right[
+
+
+### B) Freely explore data
+
+If you brought own data: Use it!
+
+Otherwise, feel free to use the provided data in `00_Data/`. Consult the `Readme.md` inside for more info.
+
+Explore, find patterns, try to answer question you have on the data, ...
+
+
+
+
+]
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
