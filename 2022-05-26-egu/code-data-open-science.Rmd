@@ -1,6 +1,6 @@
 ---
 title: "How to manage code and data for open science (and yourself)"
-subtitle: "EGU22 - SC3.13 -  Open science beyond open-access publications: how can we share our code and data?"
+subtitle: "EGU22 - SC3.13"
 author: "Michael Matiu"
 institute: ""
 date: "2022/05/26"
@@ -25,19 +25,279 @@ xaringanExtra::use_panelset()
 ## Foreword
 
 
-Slides available at https://mitmat.github.io/slides/
+- Slides available at https://mitmat.github.io/slides/
+
+- *Data* = any information in general, focus on digital
+
+- *Code* = anything you do to data, regardless of means (R, python, Excel, ...)
+
+- Files/folders
 
 
-Data = any information in general, focus on digital
+#### Structure
 
-
-Code = anything you do to data, regardless of means (R, python, Excel, ...)
-
-
-Files/folders
+Before you start  
+Data  
+Code  
+Share
 
 
 ---
+
+
+## 0. Before you start your project
+
+If you don't have it: Create folder to store all past and future projects
+```{r eval=F}
+# wherever you like: Documents, Desktop, home/
+/projects/
+``` 
+
+
+--
+
+
+Create sub-folder for current project
+```{r eval=F}
+# try not to have a long name
+/projects/time-series-analysis-of-winter-precipitation-in2022-europe
+# better
+/projects/winter-prec
+``` 
+
+--
+
+Everything project related comes in here!
+
+**--> Working directory <-- **
+
+(Use IDE capabilities, such as RStudio, Spyder, PyCharm)
+
+---
+
+
+## Example structure of working directory
+
+.pull-left[
+Basic
+
+```{r eval=F}
+data/
+R/
+fig/
+winter-prec.Rproj
+```
+]
+
+--
+
+.pull-right[
+Grow as needed
+
+```{r eval=F}
+data/
+data-aux/
+doc/
+fig/
+paper/
+R/
+table/
+winter-prec.Rproj
+```
+]
+
+---
+
+
+## Why a working directory?
+
+- Organization
+
+- Everything in one place (code, data, output)
+
+--
+
+- Relative file paths allow easy sharing/copying:
+
+```{r eval=F}
+# only works on your computer
+tbl <- read_csv("C:/Users/michael/Desktop/research/university/winter.csv")
+
+# works for everybody
+tbl <- read_csv("data/winter.csv")
+```
+
+- Exception: data hosted on servers (but then paths work for everyone within the institution)
+
+--
+
+- Better for output, too:
+
+```{r eval=F}
+# only works on your computer
+ggsave("C:/Users/michael/Documents/papers/winter-precipitation/fig01.pdf")
+
+# works for everybody
+ggsave("fig/fig01.pdf")
+```
+
+
+---
+
+## 1. Data
+
+What to do with the data you collected, received, downloaded, ... ?
+
+> Store it some place and **NEVER, EVER, EVER, EVER modify it**
+
+--
+
+--> Your first step towards *reproducibility*
+
+--
+
+- future you
+  - write up methods/documentation
+  - have to re-do analysis
+- others
+  - re-do your analysis
+  - do the same with their data
+
+
+---
+
+background-image: url("https://memegenerator.net/img/instances/44834303.jpg")
+background-position: center
+background-size: contain
+
+---
+
+## Keep track of what you did
+
+#### manually: ad-hoc versioning with documentation
+
+
+.pull-left[
+
+```{r eval=F}
+/data/samples_meta_v1.0.xlsx
+/data/samples_meta_v1.1.xlsx
+/data/samples_meta_v2.0.xlsx
+```
+
+]
+
+.pull-right[
+
+v1.0
+- split column coordinates in lat and long
+- converted lat/long from dms to decimal
+
+v1.1
+- use English for country names instead of local language
+
+v2.0
+- updated with 2022 campaign
+]
+
+--
+
+#### better: use R/python/... for data wrangling
+
+
+
+---
+
+
+## 2. Code
+
+data science workflow
+messy
+
+clean parts
+save source not workspace
+
+
+---
+
+
+
+## Naming things
+
+
++ folders
++ files
++ objects in code
+
+
+---
+
+## Coding style
+
+
++ try to follow one (does not matter which)
+
+
++ commenting (why, not what)
+
+
+
+---
+
+## 3. Share
+
+
+Think about others:
+
+- What would they need to run your code?
+- What do they need to understand what you did?
+
+Think about you:
+- What did you like about code/data you received or downloaded? 
+
+
+
+---
+
+## Do not be afraid to share your code!
+
+What's the worst that can happen?
+
+"won't be your friend anymore"
+
+
+---
+
+## Why share data openly?
+
+It's mine, mine, mine.
+
+go fast, long / go together alone
+
+more success stories from sharing collaborating
+
+
+Questions to yourself:
+- do they know how to use it?
+- do the understand limitations?
+- misuse? harmful: sensitive
+- control issues
+
+? zenhabits uncopyright
+
+official things: paid by public money -> should be public
+
+---
+
+## Links
+
+useful reads:
+
+
+
+
+---
+
 
 class: center, middle
 
