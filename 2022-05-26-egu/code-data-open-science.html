@@ -33,24 +33,37 @@ class: center, middle, inverse, title-slide
 
 
 
-## Foreword
+### Foreword
 
-
+.pull-left[
 - Slides available at https://mitmat.github.io/slides/
 
 - *Data* = any information in general, focus on digital
 
 - *Code* = anything you do to data, regardless of means (R, python, Excel, ...)
 
-- Files/folders
 
 
-#### Structure
+]
 
-Before you start  
-Data  
-Code  
-Share
+--
+
+.pull-right[
+
+- Knowledge of directory structure (see also this [article](https://www.theverge.com/22684730/students-file-folder-directory-structure-education-gen-z) at The Verge)
+
+.center[&lt;a title="Przemub, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Ms-dosdir.png"&gt;&lt;img width="400" alt="Ms-dosdir" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Ms-dosdir.png"&gt;&lt;/a&gt;]
+
+]
+
+
+
+&lt;!-- ### Outline --&gt;
+
+&lt;!-- Before you start   --&gt;
+&lt;!-- Data   --&gt;
+&lt;!-- Code   --&gt;
+&lt;!-- Share --&gt;
 
 
 ---
@@ -73,23 +86,21 @@ Create sub-folder for current project
 
 ```r
 # try not to have a long name
-/projects/time-series-analysis-of-winter-precipitation-in2022-europe
+/projects/time-series-analysis-of-winter-precipitation-europe
 # better
 /projects/winter-prec
 ```
 
 --
 
-Everything project related comes in here!
+Everything in here! **--&gt; Working directory &lt;-- **
 
-**--&gt; Working directory &lt;-- **
-
-(Use IDE capabilities, such as RStudio, Spyder, PyCharm)
+(Use IDE capabilities: RStudio, Spyder, PyCharm)
 
 ---
 
 
-## Example structure of working directory
+### Example structure of working directory
 
 .pull-left[
 Basic
@@ -124,7 +135,7 @@ winter-prec.Rproj
 ---
 
 
-## Why a working directory?
+### Why a working directory?
 
 - Organization
 
@@ -137,7 +148,7 @@ winter-prec.Rproj
 
 ```r
 # only works on your computer
-tbl &lt;- read_csv("C:/Users/michael/Desktop/research/university/winter.csv")
+tbl &lt;- read_csv("C:/Users/michael/Desktop/research/winter.csv")
 
 # works for everybody
 tbl &lt;- read_csv("data/winter.csv")
@@ -145,7 +156,12 @@ tbl &lt;- read_csv("data/winter.csv")
 
 - Exception: data hosted on servers (but then paths work for everyone within the institution)
 
---
+
+---
+
+
+### Why a working directory?
+
 
 - Better for output, too:
 
@@ -155,7 +171,7 @@ tbl &lt;- read_csv("data/winter.csv")
 ggsave("C:/Users/michael/Documents/papers/winter-precipitation/fig01.pdf")
 
 # works for everybody
-ggsave("fig/fig01.pdf")
+ggsave("fig/paper/fig01.pdf")
 ```
 
 
@@ -173,12 +189,23 @@ What to do with the data you collected, received, downloaded, ... ?
 
 --
 
-- future you
+
+.pull-left[
+**future you**
   - write up methods/documentation
   - have to re-do analysis
-- others
+]
+
+
+--
+
+
+.pull-right[
+**others**
   - re-do your analysis
   - do the same with their data
+]
+
 
 
 ---
@@ -189,23 +216,28 @@ background-size: contain
 
 ---
 
-## Keep track of what you did
+### Keep track of what you did
 
-#### manually: ad-hoc versioning with documentation
+.panelset[
 
+.panel[.panel-name[Files]
 
-.pull-left[
+**manually: ad-hoc versioning with documentation**
 
 
 ```r
-/data/samples_meta_v1.0.xlsx
+/data/samples_meta.docx # documentation
+/data/samples_meta_v1.0.xlsx # different versions of your data
 /data/samples_meta_v1.1.xlsx
 /data/samples_meta_v2.0.xlsx
 ```
 
 ]
 
-.pull-right[
+
+.panel[.panel-name[Documentation]
+
+**Content of documentation**
 
 v1.0
 - split column coordinates in lat and long
@@ -216,11 +248,31 @@ v1.1
 
 v2.0
 - updated with 2022 campaign
+
 ]
 
---
 
-#### better: use R/python/... for data wrangling
+.panel[.panel-name[Alternative]
+
+**use R/python/... for data wrangling**
+
+- scripts = documentation
+- minimal/no effort to redo everything
+
+Future you and others will thank you!
+
+]
+
+
+
+
+
+]
+
+
+
+
+
 
 
 
@@ -229,18 +281,121 @@ v2.0
 
 ## 2. Code
 
-data science workflow
-messy
+### Data science workflow
 
-clean parts
-save source not workspace
+.pull-left[
+
+
+
+.center[&lt;img src="fig/data-science.png"&gt;]
+
+.tiny[Source: R for Data Science, [R4DS](https://r4ds.had.co.nz/)]
+
+
+... in theory.
+
+]
+
+
+--
+
+
+.pull-right[
+
+But usually a bit more messy ...
+
+.center[&lt;img src="fig/data-science-messy.png"&gt;]
+
+
+]
+
 
 
 ---
 
 
+### Alternate between...
 
-## Naming things
+
+
+.pull-left[
+
+**Phase 1: creative**
+
+*interactive* - *volatile* - *changing*
+
+- explore
+- visualize
+- make errors
+- check
+- correct
+
+
+
+]
+
+
+.pull-right[
+
+**Phase 2: settle**
+
+*create a linear structure*
+
+- separate what is good and needed vs. rest
+- clean
+- organize
+
+
+]
+
+
+---
+
+Phase 1: free to do what and how you like
+
+
+---
+
+
+### Save source, not workspace
+
+
+More at [What they forgot to teach you about R](https://rstats.wtf/save-source.html)
+
+
+.pull-left[
+
+**Phase 1: Draft**
+
+- explore
+- visualize
+- make errors
+- check
+- correct
+
+*interactive phase*
+
+]
+
+
+.pull-right[
+
+**Phase 2: Finalize**
+
+- separate what is good and needed vs. rest
+- clean
+
+
+*linear structure*
+
+
+]
+
+---
+
+
+
+### Naming things
 
 
 + folders
@@ -250,13 +405,74 @@ save source not workspace
 
 ---
 
-## Coding style
+### Coding style
+
+notanecessityandyoucandowithout, but code is easier read with
+
+- personal choice
+- opinionated
 
 
-+ try to follow one (does not matter which)
+
+Try to be consistent, as far as possible.
+
+- Tidyverse https://style.tidyverse.org/index.html
+- Google https://google.github.io/styleguide/
+- PEP https://peps.python.org/pep-0008/
+- ...
 
 
-+ commenting (why, not what)
+
+
+---
+
+### Commenting (why, not what)
+
+
+.pull-left[
+
+
+```r
+# divide x by 86400
+x &lt;- x/86400
+
+
+# values above 5000 made NA
+y[y &gt; 5000] &lt;- NA
+```
+
+
+
+]
+
+.pull-right[
+
+
+
+```r
+# convert per sec to per day
+x &lt;- x/86400
+
+
+# recording errors removed
+y[y &gt; 5000] &lt;- NA
+```
+
+
+
+]
+
+
+--
+
+
+&lt;br&gt;
+
+When commenting, think about what
+
+
+- **future you** might forget
+- **others** would not understand
 
 
 
@@ -277,53 +493,123 @@ Think about you:
 
 ---
 
-## Do not be afraid to share your code!
+### Do not be afraid to share your code!
 
-What's the worst that can happen?
+.right[What's the worst that can happen?]
 
-"won't be your friend anymore"
+--
+
+It's *ignored*.
+
+--
+
+.right[What's more likely?]
+
+--
+
+- helps others, especially early-career scientist or students
+- helps you
+  - increases confidence
+  - others might discover errors
+  - more comparisons
+
 
 
 ---
 
-## Why share data openly?
+### Why share data openly?
 
-It's mine, mine, mine.
 
-go fast, long / go together alone
+Legal obligation -&gt; not motivating
 
-more success stories from sharing collaborating
+Funded by public money -&gt; should be publicly available
+
+--
+
+&lt;br&gt;
+So you hesitate, because you...
+
+- feel it's your treasure
+- want credit for it (because you deserve it)
+- want to exploit it further
+
+
+
+---
+
+### But!
+
+Consider this:
+
+- do you have the time/resources to do everything?
+- others might think of truly novel/imaginative things to do with your data
+- you still remain the authority
+
+--
+
+&gt; If you want to go fast, go alone. 
+&gt; If you want to go far, go together.
+
+More success stories from sharing and collaborating.
+
+
+--
+
+&lt;br&gt;
+Inspiring: [uncopyright](https://zenhabits.net/uncopyright/) from [zenhabits](https://zenhabits.net/)
+
+
+---
+
+### What to consider before sharing?
 
 
 Questions to yourself:
-- do they know how to use it?
-- do the understand limitations?
-- misuse? harmful: sensitive
-- control issues
+- do others know how to use it?
+- do others understand the limitations?
+- can there be misuse? (-&gt; sensitive or personal information)
+- are you ok with losing control?
 
-? zenhabits uncopyright
 
-official things: paid by public money -&gt; should be public
+### DIY
+
+put everything on Zenodo.
+
 
 ---
 
-## Links
+&lt;!-- background-image: url("https://c.tenor.com/3NxIHxOfcGgAAAAC/yard-work-fail.gif") --&gt;
+background-image: url("https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gif")
+background-position: center
+background-size: contain
+
+
+---
+
+### Links
 
 useful reads:
 
+https://stat545.com/ (R course with focus on project organization, data cleaning, ... but NOT statistical inference/modelling)
+
+https://r4ds.had.co.nz/ (R 4 data science)
 
 
 
 ---
 
 
-class: center, middle
+### Contact
 
-# `? -&gt; ! -&gt; ???`
+Michael Matiu  
 
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg> mmatiu.eurac@gmail.com
 
+<svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> https://github.com/mitmat/
 
+&lt;img src="fig/eu_logo_72x48.png" height="30"&gt;  https://clirsnow.netlify.app/
 
+(slides) https://mitmat.github.io/slides/
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
