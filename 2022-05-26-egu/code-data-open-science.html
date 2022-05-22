@@ -54,7 +54,15 @@ class: center, middle, inverse, title-slide
 
 .center[&lt;a title="Przemub, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Ms-dosdir.png"&gt;&lt;img width="400" alt="Ms-dosdir" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Ms-dosdir.png"&gt;&lt;/a&gt;]
 
+Warning: slightly biased towards &lt;a href="https://commons.wikimedia.org/wiki/File:R_logo.svg#/media/File:R_logo.svg"&gt;&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/1200px-R_logo.svg.png" alt="R logo.svg" height="30"&gt;&lt;/a&gt;
+
 ]
+
+
+
+--
+
+
 
 
 
@@ -108,6 +116,7 @@ Basic
 
 ```r
 data/
+data-raw/
 R/
 fig/
 winter-prec.Rproj
@@ -123,6 +132,7 @@ Grow as needed
 ```r
 data/
 data-aux/
+data-raw/
 doc/
 fig/
 paper/
@@ -151,7 +161,7 @@ winter-prec.Rproj
 tbl &lt;- read_csv("C:/Users/michael/Desktop/research/winter.csv")
 
 # works for everybody
-tbl &lt;- read_csv("data/winter.csv")
+tbl &lt;- read_csv("data-raw/winter.csv")
 ```
 
 - Exception: data hosted on servers (but then paths work for everyone within the institution)
@@ -226,7 +236,7 @@ background-size: contain
 
 
 ```r
-/data/samples_meta.docx # documentation
+/data/samples_meta_documentation.docx # documentation
 /data/samples_meta_v1.0.xlsx # different versions of your data
 /data/samples_meta_v1.1.xlsx
 /data/samples_meta_v2.0.xlsx
@@ -270,9 +280,32 @@ Future you and others will thank you!
 ]
 
 
+---
+
+### Data formats
 
 
+.pull-left[
 
+**Avoid**
+
+- mixing data with formatting (Excel)
+- mixing data with summaries (Excel)
+- lossy compression (`.jpeg`)
+- proprietary formats (needs specific software XYZ)
+
+]
+
+.pull-right[
+
+**Recommended**
+
+- text based storage (`.csv`, `.txt`)
+- keep summaries separate
+- lossless compression (`.png`, `.tif`)
+- open data formats
+
+]
 
 
 
@@ -314,7 +347,20 @@ But usually a bit more messy ...
 ---
 
 
-### Alternate between...
+### The problem: Interactive process
+
+
+
+.center[&lt;img src="fig/interactive-analysis.png"&gt;]
+
+
+
+
+
+---
+
+
+### Solution: Alternate between...
 
 
 
@@ -349,9 +395,35 @@ But usually a bit more messy ...
 ]
 
 
+**In Phase 2: Avoid interactive usage of IDE.** Move as much as possible to code/script
+- reading/loading data: not import dataset, but `read_*` or `load()`
+- data processing: renaming columns, replacing values
+- saving plots: not with buttons, but with `pdf() dev.off()` or `ggsave()`
+
 ---
 
-Phase 1: free to do what and how you like
+### The end product: linear stand-alone script
+
+Example, soft (not strict) guideline
+
+
+```r
+# (optional) Summary description of script
+
+# load libraries
+library(tidyverse)
+
+# input (read in data, load previously saved data)
+tbl &lt;- read_csv("data-raw/time-series.csv")
+meta &lt;- readRDS("data/meta.rds")
+
+# process, wrangle, model, ...
+...
+
+# output (figures, other data)
+ggsave("fig/fig01.png")
+saveRDS(tbl_summary, "data/time-series-summary.rds")
+```
 
 
 ---
@@ -359,48 +431,212 @@ Phase 1: free to do what and how you like
 
 ### Save source, not workspace
 
+- never store the workspace (`.Rdata`)
+- RStudio: uncheck "Restore .Rdata into workspace at startup" in `Tools &gt; Global Options`
+
+
+- clean workspace (remove all objects)
+- restart session (also remove libraries)
+
+
+- use `save()` &amp; `load()` or `saveRDS()` &amp; `readRDS()` to split up data processing and too long scripts, or to create logical blocks of analysis in multiple files
 
 More at [What they forgot to teach you about R](https://rstats.wtf/save-source.html)
 
 
-.pull-left[
+--
 
-**Phase 1: Draft**
+&lt;br&gt;
+**Why?**
 
-- explore
-- visualize
-- make errors
-- check
-- correct
-
-*interactive phase*
-
-]
+- separate independent units of analysis
+- easy to re-run everything
 
 
-.pull-right[
-
-**Phase 2: Finalize**
-
-- separate what is good and needed vs. rest
-- clean
-
-
-*linear structure*
-
-
-]
 
 ---
 
 
 
-### Naming things
+### Naming files and folders
+
+.panelset[
+
+.panel[.panel-name[Overview]
 
 
-+ folders
-+ files
-+ objects in code
+(borrowed from https://speakerdeck.com/jennybc/how-to-name-files)
+
+- machine readable
+  - no spaces (use `-` and `_`)
+  - no punctuation
+  - not case-sensitive (`fig01.png` and `Fig01.png` is the same)
+  - no accents
+- human readable
+  - info on content
+- embrace default ordering
+  - ISO standard for dates
+  - put something numeric first to create logical order
+  - left-pad with zeros
+
+
+
+]
+
+
+.panel[.panel-name[Files]
+
+.pull-left[
+
+my first project:
+
+]
+
+.pull-right[
+
+now:
+
+
+]
+
+]
+
+
+.panel[.panel-name[Dates]
+
+.pull-left[
+.center[&lt;a title="xkcd: (ISO 8601) Dates" href="https://xkcd.com/1179"&gt;&lt;img alt="xkcd: (ISO 8601) Dates" src="https://imgs.xkcd.com/comics/iso_8601.png" height="400"&gt;&lt;/a&gt;]
+]
+
+
+.pull-right[
+&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="en" dir="ltr"&gt;Comprehensive map of all countries in the world that use the MMDDYYYY format &lt;a href="http://t.co/jaOQp0oZyN"&gt;pic.twitter.com/jaOQp0oZyN&lt;/a&gt;&lt;/p&gt;&amp;mdash; Michael Donohoe (@donohoe) &lt;a href="https://twitter.com/donohoe/status/597876118688026624?ref_src=twsrc%5Etfw"&gt;May 11, 2015&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt; 
+]
+
+]
+
+
+]
+
+
+
+---
+
+
+### Naming objects in scripts
+
+
+.panelset[
+
+
+.panel[.panel-name[Short vs. long]
+
+.pull-left[
+
+```r
+# easier to type
+df1
+df2
+df2b
+
+for(i in 1960:2020){
+  for(j in countries){
+    ...
+  }
+}
+```
+]
+
+.pull-right[
+
+
+```r
+# easier to guess content
+coordinates
+time_series
+time_series_summary
+
+for(year in 1960:2020){
+  for(country in countries){
+    ...
+  }
+}
+```
+
+
+]
+
+]
+
+
+.panel[.panel-name[Use auto-complete]
+
+Keys: `TAB` or `Shift+Space`
+
+&lt;img src="fig/autocomplete.png" height="400"&gt;
+
+]
+
+
+.panel[.panel-name[Redundancy]
+
+Prefix with type (controversial)
+
+.footnotesize[
+
+.pull-left[
+
+```r
+tbl_meta # table
+tbl_data
+sf_aux # spatial
+sf_prec
+
+# also in iterations
+for(i_year in unique(tbl$year)){
+  for(i_month in unique(tbl$month)){
+    dplyr::filter(tbl,
+                  year == i_year &amp; 
+                    month == i_month)
+    ...
+  }
+}
+```
+]
+
+
+.pull-right[
+
+```r
+meta
+data
+aux
+prec
+
+# avoids
+for(yr in unique(tbl$year)){
+  for(mo in unique(tbl$month)){
+    dplyr::filter(tbl,
+                  year == yr &amp; 
+                    month == mo)
+    ...
+  }
+}
+```
+]
+
+]
+
+
+
+]
+
+
+ 
+]
+
+
+
 
 
 ---
@@ -431,11 +667,12 @@ Try to be consistent, as far as possible.
 
 .pull-left[
 
+Not useful...
+
 
 ```r
 # divide x by 86400
 x &lt;- x/86400
-
 
 # values above 5000 made NA
 y[y &gt; 5000] &lt;- NA
@@ -447,12 +684,12 @@ y[y &gt; 5000] &lt;- NA
 
 .pull-right[
 
+Better...
 
 
 ```r
 # convert per sec to per day
 x &lt;- x/86400
-
 
 # recording errors removed
 y[y &gt; 5000] &lt;- NA
@@ -473,6 +710,35 @@ When commenting, think about what
 
 - **future you** might forget
 - **others** would not understand
+
+
+
+
+---
+
+### Commenting (why, not what)
+
+Obviously redundant.
+
+
+```r
+# extract numeric columns
+cols_numeric &lt;- sapply(tbl, is.numeric)
+# calculate correlations
+cor(tbl[, cols_numeric])
+```
+
+--
+
+Keep track of what you did.
+
+
+```r
+# check for collinear variables
+cols_numeric &lt;- sapply(tbl, is.numeric)
+cor(tbl[, cols_numeric])
+# -&gt; none found
+```
 
 
 
@@ -530,12 +796,13 @@ Funded by public money -&gt; should be publicly available
 So you hesitate, because you...
 
 - feel it's your treasure
-- want credit for it (because you deserve it)
+- want credit for it (because you deserve credit!)
 - want to exploit it further
 
 
 
 ---
+layout: true
 
 ### But!
 
@@ -545,9 +812,18 @@ Consider this:
 - others might think of truly novel/imaginative things to do with your data
 - you still remain the authority
 
+
+---
+
 --
 
-&gt; If you want to go fast, go alone. 
+.center[&lt;img src="fig/share-data.svg" height="300"&gt;]
+
+---
+
+
+
+&gt; If you want to go fast, go alone.  
 &gt; If you want to go far, go together.
 
 More success stories from sharing and collaborating.
@@ -560,6 +836,7 @@ Inspiring: [uncopyright](https://zenhabits.net/uncopyright/) from [zenhabits](ht
 
 
 ---
+layout: false
 
 ### What to consider before sharing?
 
@@ -571,9 +848,12 @@ Questions to yourself:
 - are you ok with losing control?
 
 
+--
+
+
 ### DIY
 
-put everything on Zenodo.
+Put everything on [Zenodo](https://zenodo.org/). But DIY can go wrong...
 
 
 ---
@@ -583,18 +863,25 @@ background-image: url("https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gi
 background-position: center
 background-size: contain
 
-
 ---
 
 ### Links
 
-useful reads:
+R course with focus on project organization, data cleaning, ... but NOT statistical inference/modelling  
+https://stat545.com/
 
-https://stat545.com/ (R course with focus on project organization, data cleaning, ... but NOT statistical inference/modelling)
+R 4 data science  
+https://r4ds.had.co.nz/
 
-https://r4ds.had.co.nz/ (R 4 data science)
+What they forgot to teach you about R  
+https://rstats.wtf/
 
 
+Data management recommendations from GFZ
+https://bib.telegrafenberg.de/dataservices/support/data-management-recommendations
+
+How to name things  
+https://speakerdeck.com/jennybc/how-to-name-files
 
 ---
 
