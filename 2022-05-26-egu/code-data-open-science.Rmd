@@ -1,12 +1,12 @@
 ---
 title: "How to manage code and data for open science (and yourself)"
-subtitle: "EGU22 - SC3.13"
+subtitle: "EGU22 - SC3.13 - Open science beyond open-access publications: how can we share our code and data?"
 author: "Michael Matiu"
 institute: ""
 date: "2022/05/26"
 output:
   xaringan::moon_reader:
-    css: [default, css/extra.css]
+    css: [default, css/extra.css, tamu, tamu-fonts]
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -18,7 +18,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 xaringanExtra::use_panelset()
-
+xaringanExtra::use_freezeframe()
 ```
 
 
@@ -46,11 +46,6 @@ xaringanExtra::use_panelset()
 Warning: slightly biased towards <a href="https://commons.wikimedia.org/wiki/File:R_logo.svg#/media/File:R_logo.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/1200px-R_logo.svg.png" alt="R logo.svg" height="30"></a>
 
 ]
-
-
-
---
-
 
 
 
@@ -88,8 +83,7 @@ Create sub-folder for current project
 
 --
 
-Everything in here! **--> Working directory <-- **
-
+Everything in here! **--> Working directory <-- **   
 (Use IDE capabilities: RStudio, Spyder, PyCharm)
 
 ---
@@ -380,16 +374,14 @@ But usually a bit more messy ...
 **In Phase 2: Avoid interactive usage of IDE.** Move as much as possible to code/script
 - reading/loading data: not import dataset, but `read_*` or `load()`
 - data processing: renaming columns, replacing values
-- saving plots: not with buttons, but with `pdf() dev.off()` or `ggsave()`
+- saving plots: not with buttons, but with `pdf()` & `dev.off()` or `ggsave()`
 
 ---
 
 ### The end product: linear stand-alone script
 
-Example, soft (not strict) guideline
-
 ```{r eval=F}
-# (optional) Summary description of script
+# [optional description] Example of a soft (not strict) guideline
 
 # load libraries
 library(tidyverse)
@@ -428,8 +420,7 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
 
 --
 
-<br>
-**Why?**
+### Why?
 
 - separate independent units of analysis
 - easy to re-run everything
@@ -446,9 +437,6 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
 
 .panel[.panel-name[Overview]
 
-
-(borrowed from https://speakerdeck.com/jennybc/how-to-name-files)
-
 - machine readable
   - no spaces (use `-` and `_`)
   - no punctuation
@@ -461,7 +449,7 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
   - put something numeric first to create logical order
   - left-pad with zeros
 
-
+.tiny[(borrowed from https://speakerdeck.com/jennybc/how-to-name-files)]
 
 ]
 
@@ -555,7 +543,7 @@ for(year in 1960:2020){
 
 Keys: `TAB` or `Shift+Space`
 
-<img src="fig/autocomplete.png" height="400">
+<img src="fig/autocomplete.png" height="300">
 
 ]
 
@@ -838,10 +826,12 @@ Put everything on [Zenodo](https://zenodo.org/). But DIY can go wrong...
 
 ---
 
-<!-- background-image: url("https://c.tenor.com/3NxIHxOfcGgAAAAC/yard-work-fail.gif") -->
-background-image: url("https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gif")
-background-position: center
-background-size: contain
+.center[
+<img src="https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gif" height="600">
+]
+
+
+
 
 ---
 

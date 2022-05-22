@@ -6,8 +6,13 @@
     <meta name="author" content="Michael Matiu" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/tamu.css" rel="stylesheet" />
+    <link href="libs/remark-css/tamu-fonts.css" rel="stylesheet" />
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/freezeframe/freezeframe.min.js"></script>
+    <script src="libs/xaringanExtra-freezeframe/freezeframe-init.js"></script>
+    <script id="xaringanExtra-freezeframe-options" type="application/json">{"selector":"img[src$=\"gif\"]","trigger":"click","overlay":false,"responsive":true,"warnings":true}</script>
     <link rel="stylesheet" href="css/extra.css" type="text/css" />
   </head>
   <body>
@@ -18,7 +23,7 @@ class: center, middle, inverse, title-slide
 # How to manage code and data for open science (and yourself)
 ]
 .subtitle[
-## EGU22 - SC3.13
+## EGU22 - SC3.13 - Open science beyond open-access publications: how can we share our code and data?
 ]
 .author[
 ### Michael Matiu
@@ -60,11 +65,6 @@ Warning: slightly biased towards &lt;a href="https://commons.wikimedia.org/wiki/
 
 
 
---
-
-
-
-
 
 &lt;!-- ### Outline --&gt;
 
@@ -101,8 +101,7 @@ Create sub-folder for current project
 
 --
 
-Everything in here! **--&gt; Working directory &lt;-- **
-
+Everything in here! **--&gt; Working directory &lt;-- **   
 (Use IDE capabilities: RStudio, Spyder, PyCharm)
 
 ---
@@ -398,17 +397,15 @@ But usually a bit more messy ...
 **In Phase 2: Avoid interactive usage of IDE.** Move as much as possible to code/script
 - reading/loading data: not import dataset, but `read_*` or `load()`
 - data processing: renaming columns, replacing values
-- saving plots: not with buttons, but with `pdf() dev.off()` or `ggsave()`
+- saving plots: not with buttons, but with `pdf()` &amp; `dev.off()` or `ggsave()`
 
 ---
 
 ### The end product: linear stand-alone script
 
-Example, soft (not strict) guideline
-
 
 ```r
-# (optional) Summary description of script
+# [optional description] Example of a soft (not strict) guideline
 
 # load libraries
 library(tidyverse)
@@ -446,8 +443,7 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
 
 --
 
-&lt;br&gt;
-**Why?**
+### Why?
 
 - separate independent units of analysis
 - easy to re-run everything
@@ -464,9 +460,6 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
 
 .panel[.panel-name[Overview]
 
-
-(borrowed from https://speakerdeck.com/jennybc/how-to-name-files)
-
 - machine readable
   - no spaces (use `-` and `_`)
   - no punctuation
@@ -479,7 +472,7 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
   - put something numeric first to create logical order
   - left-pad with zeros
 
-
+.tiny[(borrowed from https://speakerdeck.com/jennybc/how-to-name-files)]
 
 ]
 
@@ -573,7 +566,7 @@ for(year in 1960:2020){
 
 Keys: `TAB` or `Shift+Space`
 
-&lt;img src="fig/autocomplete.png" height="400"&gt;
+&lt;img src="fig/autocomplete.png" height="300"&gt;
 
 ]
 
@@ -858,10 +851,12 @@ Put everything on [Zenodo](https://zenodo.org/). But DIY can go wrong...
 
 ---
 
-&lt;!-- background-image: url("https://c.tenor.com/3NxIHxOfcGgAAAAC/yard-work-fail.gif") --&gt;
-background-image: url("https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gif")
-background-position: center
-background-size: contain
+.center[
+&lt;img src="https://c.tenor.com/DprC7x1wvxAAAAAC/bbw-homer-simpson.gif" height="600"&gt;
+]
+
+
+
 
 ---
 
