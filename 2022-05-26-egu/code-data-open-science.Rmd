@@ -19,6 +19,7 @@ output:
 options(htmltools.dir.version = FALSE)
 xaringanExtra::use_panelset()
 xaringanExtra::use_freezeframe()
+xaringanExtra::use_webcam()
 ```
 
 
@@ -454,23 +455,87 @@ More at [What they forgot to teach you about R](https://rstats.wtf/save-source.h
 ]
 
 
-.panel[.panel-name[Files]
+.panel[.panel-name[Files 1]
 
 .pull-left[
 
-my first project:
+
+```{r eval=FALSE}
+R
+|-- data-prep
+|   |-- modis-02-tif-coarse-res.R
+|   |-- modis-03-dt-snow-nosnow-clouds.R
+|   |-- modis-04-dt-snc.R
+|   |-- rcm-00-gridspec.R
+|   |-- rcm-01-cdo.R
+|   `-- rcm-02-snow-max-threshold.R
+|-- ds
+|   |-- compare-bc-ds.R
+|   |-- rgi-make-grid-frac-cover.R
+|   |-- rofental-01-comp-maps.R
+|   |-- rofental-02-comp-elev-month.R
+|   |-- rofental-03-region-avg.R
+|   |-- rofental-04-mask-for-flo.R
+...
+```
 
 ]
 
 .pull-right[
 
-now:
+```{r eval=FALSE}
+...
+|   |-- rofental-05-comp-maps-ensmean.R
+|   `-- rofental-06-elev-only.R
+|-- functions
+|   |-- longest_subseq.cpp
+|   |-- longest_subseq.R
+|   `-- MBC_helpers.R
+|-- paper-01-initial
+|   |-- fig-01-study-area.R
+|   |-- fig-02-downscaling-method.R
+|   |-- fig-03-bc-alps-month.R
+|   |-- snow-plausible.R
+|   |-- table-01-models-used.R
+|   |-- zenodo-01-bc.R
+|   `-- zenodo-02-ds.R
+`-- temp.R
+
+```
+
 
 
 ]
 
 ]
 
+
+
+.panel[.panel-name[Files 2]
+
+My first project:
+
+
+```{r eval=FALSE}
+temp-variability
+|-- 1.R
+|-- 2b.R
+|-- 2.R
+|-- d.R
+|-- data.Rdata
+|-- data2.Rdata
+|-- fig10.pdf
+|-- fig1.pdf
+|-- fig2.pdf
+|-- fun.R
+|-- plot.pdf
+|-- rq.R
+|-- rqs.R
+`-- temp-variability.Rproj
+```
+
+
+]
 
 .panel[.panel-name[Dates]
 
@@ -551,9 +616,7 @@ Keys: `TAB` or `Shift+Space`
 .panel[.panel-name[Redundancy]
 
 Prefix with type (controversial)
-
 .footnotesize[
-
 .pull-left[
 ```{r eval=F}
 tbl_meta # table
@@ -573,8 +636,6 @@ for(i_year in unique(tbl$year)){
 
 ```
 ]
-
-
 .pull-right[
 ```{r eval=F}
 meta
