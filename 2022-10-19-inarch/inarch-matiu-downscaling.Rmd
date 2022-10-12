@@ -1,0 +1,86 @@
+---
+title: "Downscaling approaches for climate model projections in complex terrain"
+subtitle: "From snow cover duration to meteorology"
+author: "Michael Matiu, Florian Hanzer, Anna Napoli, Bruno Majone, & others"
+institute: ""
+date: "2022/10/19"
+output:
+  xaringan::moon_reader:
+    css: [default, css/extra.css, tamu, tamu-fonts]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_panelset()
+xaringanExtra::use_freezeframe()
+# xaringanExtra::use_webcam()
+```
+
+
+## Setting the scene
+
+.pull-left[
+
+Climate model projections
+
+<img width="500" alt="GCM and EURO-CORDEX" src="https://www.nccs.admin.ch/nccs/en/home/climate-change-and-impacts/swiss-climate-change-scenarios/understanding-climate-change-scenarios/_jcr_content/par/image/image.imagespooler.png/1540980848821/Globus_EURO-CORDEX_V01.png">
+
+]
+
+
+.pull-right[
+
+Complex mountainous terrain
+
+<img height="400" alt="Mountain image around Trento" src="fig/euregio-calendar-mountain.png">
+
+]
+
+
+.footnote[Online version of these slides and the poster: https://mitmat.github.io/slides/]
+
+
+---
+
+
+## The problem
+
+
+.center[<img height="450px" alt="Mountain and climate model grid cell" src="fig/gruber-mountain-gridcell.jpeg">]
+
+.footnote[Image by: [Stephan Gruber, Carleton University](https://carleton.ca/geography/people/gruberstephan/)]
+
+
+---
+
+
+## No solution, but...
+
+
+
+.pull-left[
+
+- Empirical statistical downscaling of snow cover fraction/duration, directly from RCMs
+- Scale issues
+- Discuss: Downscaling of meteorology in complex terrain, elevational gradients
+
+]
+
+
+.pull-right[
+
+.center[<a title="Download poster as PDF" href="pdf/inarch_matiu_poster.pdf"><img height="400" alt="Poster image" src="fig/poster-screenshot.png"></a>]
+
+]
+
+
+.footnote[Click on poster to download it as PDF]
+
+
+
