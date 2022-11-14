@@ -2,7 +2,7 @@
 title: "Snow in the European Alps"
 subtitle: "Environmental Meteorology seminar series UniTN"
 author: "Michael Matiu"
-institute: ""
+institute: "DICAM, Uni Trento"
 date: "2022/11/17"
 output:
   xaringan::moon_reader:
@@ -127,11 +127,224 @@ class: center, middle, inverse
 
 ---
 
-https://www.eldoradoweather.com/climate/GlobalMaps/Snow%20Cover/snowcover.php
+
+map NH snowcover seasonal, animated? NSIDC
+
+interannual NH snow
+
+<!-- https://www.eldoradoweather.com/climate/GlobalMaps/Snow%20Cover/snowcover.php -->
+
 
 
 
 ---
+
+
+# Snow = Water
+
+Globally, **mountain water towers** affect a quarter of humanity ([Immerzeel et al., 2020](https://doi.org/10.1038/s41586-019-1822-y))
+
+.pull-left[<img height="450" alt="Immerzeel et al. 2020, Fig 2a" src="fig/immerzeel1.png">]
+
+.pull-right[<img height="450" alt="Immerzeel et al. 2020, Fig 2b" src="fig/immerzeel2.png">]
+
+
+---
+
+# The 2022 Italian snow drought
+
+
+<a href="https://blogs.egu.eu/divisions/cr/2022/09/16/why-the-2022-italian-snow-drought-matters-to-you/"><img height="500" alt="SWE of the Italian Alps 2022 compared to last decade" src="https://blogs.egu.eu/divisions/cr/files/2022/09/Fig2.png"></a>
+
+.footnote[Source: https://blogs.egu.eu/divisions/cr/2022/09/16/why-the-2022-italian-snow-drought-matters-to-you/]
+
+
+
+---
+
+# The 2022 Italian snow drought
+
+.leftcol-21[
+<a href="https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis"><img alt="Screenshot of guardian article on 2022 Italian snow drought" src="fig/guardian1.png"></a>
+]
+
+.rightcol-21[
+<a href="https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis"><img alt="Screenshot of guardian article on 2022 Italian snow drought" src="fig/guardian2.png"></a>
+]
+
+
+.footnote[Source: https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis]
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# How is snow measured?
+
+### (focus here: macroscopic snow variables)
+
+
+---
+
+# in-situ: manual snow depth
+
+.center[<img height="500" alt="Manual snow depth measurements with rods and rulers" src="fig/snow-measurement1.png">]
+
+.footnote[Source: [European Snow Booklet](https://doi.org/10.16904/envidat.59)]
+
+---
+
+# in-situ: automatic snow depth
+
+.center[<img height="500" alt="Sonic sensors for snow depth measurement" src="fig/snow-measurement2.png">]
+
+.footnote[Source: [European Snow Booklet](https://doi.org/10.16904/envidat.59)]
+
+---
+
+# in-situ: manual snow water equivalent
+
+.center[<img height="500" alt="measuring snow water equivalent with snow cylinders" src="fig/snow-measurement3.png">]
+
+.footnote[Source: [European Snow Booklet](https://doi.org/10.16904/envidat.59)]
+
+---
+
+# in-situ: automatic snow water equivalent
+
+.center[<img height="500" alt="measuring snow water equivalent with snow pillows" src="fig/snow-measurement4.png">]
+
+.footnote[Source: [European Snow Booklet](https://doi.org/10.16904/envidat.59)]
+
+
+---
+
+# remote
+
+
+.center[<img height="500" alt="measuring snow water equivalent with snow pillows" src="fig/hu-2017-fig5.png">]
+
+.footnote[Source: [Hu et al., 2017](https://doi.org/10.3390/rs9101067)]
+
+
+---
+
+class: center, middle, inverse
+
+# Snow climatology in the European Alps
+
+
+---
+
+# In-situ snow depth observations: Time period
+
+<img alt="Matiu et al. 2021, Fig 2a" src="fig/matiu-2021-fig2a.png">
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+---
+
+# In-situ snow depth observations: Spatial coverage
+
+.pull-left[
+<img alt="Matiu et al. 2021, Fig 1b" src="fig/matiu-2021-fig1b.png">
+]
+
+.pull-right[
+<img alt="Matiu et al. 2021, Fig 2c" src="fig/matiu-2021-fig2c.png">
+]
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+---
+
+# Average snow depth 1981-2010
+
+
+.center[<img height="500" alt="Matiu et al. 2021, Fig 6a, modified" src="fig/matiu-2021-hs-clim-noregion.png">]
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+
+
+---
+
+# Common variability in daily snow depth (1981-2010)
+
+.center[<img height="500" alt="Matiu et al. 2021, Fig 3" src="fig/matiu-2021-pca-sub4.jpg">]
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+
+---
+
+class: center, middle
+
+### Interactive: 
+
+https://clirsnow.netlify.app/dash-results/dash-climatology.html#explore-climatic-boundaries
+
+
+
+
+---
+
+class: center, middle, inverse
+
+# Past and future trends of snow cover 
+
+
+---
+
+# Past trends 1971-2019
+
+
+.center[<img height="500" alt="Matiu et al. 2021, Fig. C1 modified" src="fig/matiu-2021-hs-seasonal-trends-noregion.png">]
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+---
+
+# Past trends 1971-2019: Summary table
+
+
+.center[<img height="500" alt="Matiu et al. 2021, Table 3" src="fig/matiu-2021-table3.png">]
+
+.footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+---
+
+class: center, middle, inverse
+
+# Conclusions
+
+
+---
+
+
+# Conclusions
+
+(take some from papers)
+
+- 1
+- 2
+- 3
+- 4  
+- 5
+
+---
+
+class: center, middle, inverse
+
+# ? -> ! -> ???
+
+
+
+
+
 
 
 

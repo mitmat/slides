@@ -13,6 +13,19 @@
 
 
 
+
+/* two columns, adapted from default.css */
+
+.leftcol-21 {
+  float: left;
+  width: 64%;
+}
+.rightcol-21 {
+  float: right;
+  width: 32%;
+}
+
+
 /* subset of hygge.css in xaringan resource folder*/
 
 
