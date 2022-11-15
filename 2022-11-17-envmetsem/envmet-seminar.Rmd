@@ -381,8 +381,12 @@ class: center, middle, inverse
 
 # ? -> ! -> ???
 
+<br><br><br><br>
 
-
+Contact: [michael.matiu@unitn.it](michael.matiu@unitn.it)  
+Homepage: [mitmat.eu](https://mitmat.eu)  
+Slides available at: [github.com/mitmat/slides](https://github.com/mitmat/slides)  
+Work performed during project: [clirsnow.netlify.app](https://clirsnow.netlify.app)
 
 
 
