@@ -17,12 +17,10 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-xaringanExtra::use_panelset()
-xaringanExtra::use_freezeframe()
+# xaringanExtra::use_panelset()
+# xaringanExtra::use_freezeframe()
 # xaringanExtra::use_webcam()
 ```
-
-
 
 ## Outline
 
@@ -92,6 +90,13 @@ background-size: contain
 
 ---
 
+background-image: url("fig/snow-layer-wind.jpg")
+background-size: cover
+
+.footnote[Image by <a href="https://pixabay.com/users/natalia_kollegova-5226803/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3173001">Наталья Коллегова</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3173001">Pixabay</a>]
+
+---
+
 
 class: center, middle, inverse
 
@@ -127,14 +132,35 @@ class: center, middle, inverse
 
 ---
 
+class: middle
 
-map NH snowcover seasonal, animated? NSIDC
+.pull-left[<img src="fig/nh_map_2018_2022_biweekly.gif">]
 
-interannual NH snow
+.pull-right[<img src="fig/nh-seasonal-clim.png">]
 
-<!-- https://www.eldoradoweather.com/climate/GlobalMaps/Snow%20Cover/snowcover.php -->
+.footnote[Source: [Global Snow Lab](http://climate.rutgers.edu/snowcover/index.php)]
 
 
+---
+
+class: middle
+
+.pull-left[<img src="fig/nh_map_2018_2022_biweekly.gif">]
+
+.pull-right[<img src="fig/nh-interannual-feb.png">]
+
+.footnote[Source: [Global Snow Lab](http://climate.rutgers.edu/snowcover/index.php)]
+
+
+---
+
+class: middle
+
+.pull-left[<img src="fig/nh_map_2018_2022_biweekly.gif">]
+
+.pull-right[<img src="fig/nh-interannual-jun.png">]
+
+.footnote[Source: [Global Snow Lab](http://climate.rutgers.edu/snowcover/index.php)]
 
 
 ---
@@ -189,7 +215,7 @@ class: center, middle, inverse
 
 ---
 
-# in-situ: manual snow depth
+# In-situ: manual snow depth
 
 .center[<img height="500" alt="Manual snow depth measurements with rods and rulers" src="fig/snow-measurement1.png">]
 
@@ -197,7 +223,7 @@ class: center, middle, inverse
 
 ---
 
-# in-situ: automatic snow depth
+# In-situ: automatic snow depth
 
 .center[<img height="500" alt="Sonic sensors for snow depth measurement" src="fig/snow-measurement2.png">]
 
@@ -205,7 +231,7 @@ class: center, middle, inverse
 
 ---
 
-# in-situ: manual snow water equivalent
+# In-situ: manual snow water equivalent (SWE)
 
 .center[<img height="500" alt="measuring snow water equivalent with snow cylinders" src="fig/snow-measurement3.png">]
 
@@ -213,7 +239,7 @@ class: center, middle, inverse
 
 ---
 
-# in-situ: automatic snow water equivalent
+# In-situ: automatic snow water equivalent (SWE)
 
 .center[<img height="500" alt="measuring snow water equivalent with snow pillows" src="fig/snow-measurement4.png">]
 
@@ -222,7 +248,7 @@ class: center, middle, inverse
 
 ---
 
-# remote
+# Remote
 
 
 .center[<img height="500" alt="measuring snow water equivalent with snow pillows" src="fig/hu-2017-fig5.png">]
@@ -310,10 +336,14 @@ class: center, middle, inverse
 
 # Past trends 1971-2019: Summary table
 
-
 .center[<img height="500" alt="Matiu et al. 2021, Table 3" src="fig/matiu-2021-table3.png">]
 
 .footnote[Source: [Matiu et al., 2021](https://doi.org/10.5194/tc-15-1343-2021)]
+
+---
+
+background-image: url("fig/info-future_EN.png")
+background-size: contain
 
 ---
 
@@ -327,13 +357,23 @@ class: center, middle, inverse
 
 # Conclusions
 
-(take some from papers)
 
-- 1
-- 2
-- 3
-- 4  
-- 5
+
+- The Alps has one of the densest in-situ observation networks of snow cover in the world and a long history of observations. But not all elevations are well monitored: 
+  + Good below 2000m, sparse between 2000 and 3000m, and almost none above 3000m.
+- Satellite remote sensing offers long-term and full spatial coverage, but currently only offers snow cover area and not snow mass or proxies thereof.
+--
+
+- The orography of the Alps is the main impact on snow climatology.
+  + The location of a station with respect to climate forcing zone impacts variability at the daily scale and also trend magnitude and trend sign.
+  + `-> ` Generalizing from one region to the other should be done carefully, if at all.
+--
+
+- Past trends show widespread decreases of snow cover in the Alps for the last 50 years, which will continue in the future.
+  + Stronger relative decreases found at lower elevations and in spring.
+  + The magnitude of future changes depends on greenhouse gas concentrations and are 2-3x larger for a 4-5°C warmer world as compared to 1.5-2°C. 
+
+
 
 ---
 
