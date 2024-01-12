@@ -1,5 +1,6 @@
 ## Content
 
+-   2024-01-12: [Gipfelgespräche 2024](https://www.globoalpin.com/de/gipfelgespraeche-berg-und-klima-im-fokus.html), Berg und Klima, organisiert von [Globoalpin](https://www.globoalpin.com/): Schnee im Klimawandel ([Folien](https://mitmat.github.io/slides/2024-01-12-bergklima/bergklima.html))
 -   2022-11-17: Environmental Meteorology Seminar series, Univerity of Trento, part of the programme of the [MSc in Environmental Meteorology](https://international.unitn.it/environmental-meteorology): Snow in the European Alps ([slides](https://mitmat.github.io/slides/2022-11-17-envmetsem/envmet-seminar.html))
 -   2022-10-19: [INARCH 2022 Workshop](https://inarch.usask.ca/news-events/inarch-workshop-2022.php): Downscaling approaches for climate model projections in complex terrain ([slides](https://mitmat.github.io/slides/2022-10-19-inarch/inarch-matiu-downscaling.html))
 -   2022-05-26: [EGU22](https://www.egu22.eu/): How to manage code and data for open science (and yourself) ([slides](https://mitmat.github.io/slides/2022-05-26-egu/code-data-open-science.html))

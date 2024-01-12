@@ -1,0 +1,568 @@
+---
+title: "Schnee im Klimawandel"
+subtitle: "Berechtigte Sorgen oder alles nur Märchen?"
+author: "Dr. Michael Matiu"
+institute: "DICAM, UniTrento"
+date: "2024/01/12"
+format:
+  revealjs: 
+    theme: [simple, custom.scss]
+title-slide-attributes:
+  data-background-image: "/fig/snow-nz-3.JPG"
+  data-background-size: cover
+  data-background-opacity: "0.7"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(bsicons)
+```
+
+# Was ist Schnee? </br> (für dich)?
+
+##  {background-image="fig/snow-fun.gif" background-size="cover"}
+
+##  {background-image="fig/snow-shoveling.jpg" background-size="cover"}
+
+::: aside
+Image by <a href="https://pixabay.com/users/alehandra13-1817807/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3146420">Alehandra13</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3146420">Pixabay</a>
+:::
+
+
+## Andere Meinungen
+
+> "Acqua."
+
+. . .
+
+> "Niederschlag."
+
+. . .
+
+> "Quando ero giovane, pura gioia. Adesso solo scocciatura."
+
+. . .
+
+> "I don't know what snow is."
+
+. . . 
+
+> "Stupore, allegria. In macchina paura. Bello in montagna."
+
+
+##  {background-image="fig/snowfall2.jpg" background-size="cover"} {visibility="hidden"}
+
+::: aside
+Photo <a href="https://pixabay.com/users/cocoparisienne-127419/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1861704">Anja</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1861704">Pixabay</a>
+:::
+
+
+
+# Schnee = Wasser (Teil 1: Am Anfang)
+
+
+
+##  {background-image="fig/snow-grains.png" background-size="contain"}
+
+::: aside
+[Snow classification](https://cryosphericsciences.org/publications/snow-classification/)
+:::
+
+ 
+
+##  {background-image="fig/snow-layer-wind.jpg" background-size="cover"}
+
+::: aside
+Image by <a href="https://pixabay.com/users/natalia_kollegova-5226803/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3173001">Наталья Коллегова</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3173001">Pixabay</a>
+:::
+
+
+# Warum ist Schnee wichtig?
+
+
+
+##  {background-image="fig/albedo-explanation.png" background-size="contain"}
+
+::: aside
+Source: [studyflix.de](https://studyflix.de/erdkunde/albedo-5698/)
+:::
+
+
+
+## Albedo
+
+
+![](fig/albedo-examples.png)
+<!-- Asphalt 0.04-0.12, Aluminium 0.85 -->
+
+::: aside
+Source: [studyflix.de](https://studyflix.de/erdkunde/albedo-5698/)
+:::
+
+
+
+## Schneebedeckung Nordhalbkugel {.smaller}
+
+
+:::: {.columns}
+
+::: {.column}
+![](fig/nh_map_2018_2022_biweekly.gif)
+:::
+
+::: {.column}
+Januar im Mittel 47 Mill. km² ~ 
+
+::: {.incremental}
+- 150 Italiens
+- 130 Deutschlands
+- 6350 Südtirols
+- 1/3 Nordhalbkugel (Landfläche)
+:::
+
+:::
+
+::::
+
+
+# Schnee = Wasser (Teil 2: Am Ende)
+
+
+## Schnee als natürlicher Wasserspeicher
+
+
+![](fig/snow-nz-3.JPG){.absolute top=250 left=0 width="400"}
+![](fig/Kraftwerk Lappach_Neves Stausee_Alperia_1200px.jpg){.absolute top=250 right=0 width="400"}
+![](fig/eq.png){.absolute top=300 left=450 width="150"}
+
+
+::: aside
+Source: [Alperia](https://landesregierung.provinz.bz.it/de/news/umweltplane-fur-kraftwerke-lappach-muhlen-und-sarnthein-genehmigt)
+:::
+
+
+## {background-image="fig/cima-snow-2024.png" background-size="contain"}
+
+<!-- Schneewasseräquivalent <br> Italien 2023/24  -->
+
+::: aside
+Source: [CIMA](https://www.cimafoundation.org/news/neve-deficit-del-44-nel-nostro-primo-aggiornamento-della-stagione/)
+:::
+
+
+## 2022 Dürre Poebene
+
+
+:::: {.columns}
+
+::: {.column width="60%"}
+<a href="https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis"><img alt="Screenshot of guardian article on 2022 Italian snow drought" src="fig/guardian1.png"></a>
+:::
+
+::: {.column width="40%"}
+<a href="https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis"><img alt="Screenshot of guardian article on 2022 Italian snow drought" src="fig/guardian2.png"></a>
+:::
+
+::::
+
+
+::: aside
+Source: [The Guardian](https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis)
+:::
+
+
+
+# Wie wird Schnee gemessen?
+
+**(Fokus hier: makroskopisch)**
+
+## In-situ
+
+::: {.r-stack}
+![](fig/snow-measurement1.png){.fragment height="500"}
+
+![](fig/snow-measurement2.png){.fragment height="500"}
+
+![](fig/snow-measurement3.png){.fragment height="550"}
+
+![](fig/snow-measurement4.png){.fragment height="450"}
+:::
+
+
+::: aside
+Source: [European Snow Booklet](https://doi.org/10.16904/envidat.59)
+:::
+
+## Aus der Ferne
+
+
+![](fig/hu-2017-fig5_1200px.png)
+
+
+::: aside
+Source: [Hu et al., 2017](https://doi.org/10.3390/rs9101067)
+:::
+
+
+
+# (Schnee-) Klima in den Alpen
+
+. . . 
+
+> "Klima ist das, was wir erwarten. <br/> Wetter ist das, was wir bekommen."
+
+
+
+
+## Alpen als Wetterscheide
+
+Cooles Video wie sich die Luftmassen um die Alpen bewegen.
+
+
+## Datenquelle: Alpenweite in-situ Beobachtungen
+
+![](fig/matiu-2021-fig1b.png)
+
+
+## {background-image="fig/clim-hs-DJF.png" background-size="contain"}
+
+## {background-image="fig/clim-tmean-DJF.png" background-size="contain"}
+
+## {background-image="fig/clim-prec-DJF.png" background-size="contain"}
+
+## Was kommt nach der Höhe?
+
+![](fig/bag-kmeans.png)
+
+
+## {background-image="fig/zones-simple.png" background-size="contain"}
+
+
+## {background-image="fig/clim-HS-DJF-region5.png" background-size="contain"}
+
+## {background-image="fig/clim-tmean-DJF-region5.png" background-size="contain"}
+
+## {background-image="fig/clim-prec-DJF-region5.png" background-size="contain"}
+
+
+
+# Schneehöhen 1971-2019
+
+
+## {background-image="fig/trends-djf-left.png" background-size="contain"}
+## {background-image="fig/trends-djf.png" background-size="contain"}
+## {background-image="fig/trends-djf-numbers.png" background-size="contain"}
+## {background-image="fig/trends-mam.png" background-size="contain"}
+## {background-image="fig/trends-mam-numbers.png" background-size="contain"}
+
+## {.center}
+
+> "Über die vergangenen 45 Jahre ist ab mittleren Höhenlagen der Alpen kein Trend zu wärmeren Wintern
+messbar... Wer sich jetzt fragt, wo denn die Klimaerwärmung in den Alpen geblieben ist oder warum
+denn nun die Gletscher schrumpfen, dem sei
+gesagt: Die Sommer sind es!"
+
+
+
+
+# Schneefall 1921-2020
+
+(unterhalb von 2000m)
+
+## Datengrundlage
+
+![](fig/hn-study-01-clustering-nohistalp.png)
+
+## {.smaller background-image="fig/smi-domodossola.png" background-size="cover"}
+
+::: {style="background-color: #ece7f2; position: absolute; bottom: 0; left: 0; "}
+> "noi prepareremo pei nostri posteri un materiale ben ordinato e prezioso 
+per istabilire con ottimo fondamento il non facile edifizio 
+della climatologia delle nostre regioni, 
+al quale intendimento sono rivolti 
+i nostri sforzi e tutti i nostri studi" <br/> Denza F., BM 11(1), 1876
+
+Courtesy: Daniele Cat Berro, Società Meteorologica Italiana
+:::
+
+## {background-image="fig/hn-study-02-sw-left.png" background-size="contain"}
+## {background-image="fig/hn-study-02-sw.png" background-size="contain"}
+## {background-image="fig/hn-study-03-n.png" background-size="contain"}
+
+## {.center}
+
+> "Die Schneemengen haben in alpinen
+Lagen oberhalb von etwa 900 Meter Höhe in den
+vergangenen 100 Jahren auch nicht abgenommen."
+
+> "... die Wintersaison hat konstante Werte in den Schneefällen, konstante Werte in
+der Temperatur."
+
+
+# Und die Zukunft?
+
+## (Un-)Berechtigte Sorgen? {.center}
+
+> "Meine Generation und die nächsten beiden Generationen werden bestimmt keine
+Probleme mit dem Klimawandel haben."
+
+
+## Treibhauseffekt
+
+
+
+::: {.incremental}
+- Treibhausgase in der Atmosphäre: globale Mitteltemperatur
+- ohne Treibhausgase: $-18°C$
+- vorindustriellen Zeiten (1850-1900): $+13.9°C$
+- seit 2015: $+15°C$
+- Zukunft: Treibhausgase in der Atmosphäre
+:::
+
+::: {.aside}
+Source: [Wikipedia](https://en.wikipedia.org/wiki/Greenhouse_effect), [Climate Change Tracker](https://climatechangetracker.org/global-warming/yearly-average-temperature)
+:::
+
+## {.center}
+
+> "Il riscaldamento globale … dipende dalle variazioni dell’asse terrestre nel suo movimento rispetto al sole."
+
+> "Siamo la coda di una mini glaciazione che avvenuta tra il 1500 e il 1700."
+
+
+## Global vs. lokal {.smaller}
+
+::: {.aside}
+Source: [Copernicus temperature indicators](https://climate.copernicus.eu/climate-indicators/temperature)
+:::
+
+
+:::: {.columns}
+
+::: {.column}
+5-Jahres-Mittelwerte
+
+(2018-2022)
+:::
+
+::: {.column}
+![](fig/Temp_trend2022.png)
+:::
+
+::::
+
+
+## Klima- und Wettermodelle  {.smaller}
+
+![](fig/climate-model-apollo.png)
+
+Was ist was?
+
+- Foto der Apollo 17 Astronauten (7 Dezember 1972)
+- Computermodellsimulation (7 Dezember 1972)
+
+
+::: {.aside}
+Source: [WMO](https://wmo.int/content/kilometre-scale-modelling-of-earth-system-new-paradigm-climate-prediction)
+:::
+
+
+## Programmfehler ("bugs") {visibility="hidden"}
+
+![](fig/DefectDensityResults-sm.jpg){height="500px"}
+
+::: {.aside}
+Source: [Serendipity blog](https://www.easterbrook.ca/steve/2014/05/tedx-talk-should-we-trust-climate-models/)
+:::
+
+
+
+## Klimaprognosen
+
+:::: {.columns}
+::: {.column}
+::: {.fragment}
+**Vorhersage**: 
+
+- So wird es sein.
+:::
+:::
+
+::: {.column}
+::: {.fragment .fade-in .incremental}
+**Szenario**
+
+- Wenn A, dann X.
+- Wenn B, dann Z.
+- ...
+:::
+::: {.fragment .fade-in}
+:::: {style="background-color: #ece7f2"}
+**Klimaszenarien `r bs_icon("wrench-adjustable")` Strategisches Management**
+::::
+:::
+:::
+
+::::
+
+## Europa
+
+Szenario RCP8.5: <br/> (kontinuierlich steigende Treibhausgase in der Atmosphäre) <br/> 4-5 °C globale Erwärmung bis Ende 21. Jh.
+
+
+
+::: aside
+Source: [Coppola et al. 2021](https://doi.org/10.1029/2019JD032344)
+:::
+
+##  {background-image="fig/coppola-2021-tmin-djf.png" background-size="contain"}
+
+##  {background-image="fig/coppola-2021-prec-djf.png" background-size="contain"}
+
+
+## Was bedeutet das für den Schnee?
+
+::: {.incremental}
+
+Temperatur `r bs_icon("thermometer-half")` `r bs_icon("arrow-up-right")`
+
+- mehr Regen `r bs_icon("cloud-drizzle")` `r bs_icon("arrow-up-right")` statt Schneefall `r bs_icon("cloud-snow")` `r bs_icon("arrow-down-right")`
+- Schnee `r bs_icon("snow")` schmilzt schneller/früher
+- intensiverer Schneefall `r bs_icon("cloud-snow-fill")`
+
+Niederschlag `r bs_icon("cloud-rain-heavy-fill")` `r bs_icon("arrow-up-right")` ?
+
+- mehr Regen `r bs_icon("cloud-drizzle")` `r bs_icon("arrow-up-right")` und mehr Schneefall `r bs_icon("cloud-snow")` `r bs_icon("arrow-up-right")`
+
+Zusammen (zumindest in den Alpen):
+
+- weniger Schnee, kürzere Schneedauer
+:::
+
+
+## {background-image="fig/future-ger-01-past.png" background-size="contain"}
+## {background-image="fig/future-ger-02-paris.png" background-size="contain"}
+## {background-image="fig/future-ger-03-full.png" background-size="contain"}
+
+
+
+
+
+## Jeder darf an Märchen glauben... {visibility="hidden"}
+
+> Es ist keinesfalls so, dass die Wissenschaft versucht, die Meinungsfreiheit einzudämmen. Das Recht auf freie Meinungsäußerung besitzt jeder und das ist zentral für unsere Demokratie. **Wenn jemand wirklich glaubt, dass die Erde eine Scheibe ist, soll derjenige seine Meinung behalten.** Jeder hat das Recht, sich auf die Straße zu stellen und sich zu blamieren. **Nur hat keiner das Recht darauf, damit ernst genommen zu werden.**
+
+::: aside
+[Florian Aigner, [Barfuss-Interview](https://www.barfuss.it/stories/das-ist-geistiges-fast-food/), "Das ist geistiges Fast Food"
+:::
+
+
+## Schneepropheten?
+
+::: {.r-stack}
+![](fig/koenigskerze.jpg){.fragment height="500"}
+
+![](fig/merkur-schneeprophet.png){.fragment}
+:::
+
+::: aside
+Source: [Wikipedia](https://commons.wikimedia.org/wiki/File:Great_Mullein_(Verbascum_thapsus)_-_geograph.org.uk_-_1471894.jpg) and [Merkur](https://www.merkur.de/lokales/bad-toelz/benediktbeuern-ort28358/winter-schnee-vorhersage-weihnachten-josef-sepp-haslinger-benediktbeuern-koenigskerze-wetterkerze-92468972.html)
+:::
+
+
+## Klimawürfel (selbstgebaut)
+
+
+`r bs_icon("dice-1")` sehr wenig Schnee, `r bs_icon("dice-6")` extrem viel Schnee
+
+Vergangenheit:
+
+- [`r bsicons::bs_icon("dice-1")` `r bsicons::bs_icon("dice-2")`  `r bsicons::bs_icon("dice-3")` `r bsicons::bs_icon("dice-4")`  `r bsicons::bs_icon("dice-4")`  `r bsicons::bs_icon("dice-5")`]{.fragment .fade-in}
+
+Zukunft?
+
+- [`r bsicons::bs_icon("dice-1")` `r bsicons::bs_icon("dice-2")`  `r bsicons::bs_icon("dice-3")` `r bsicons::bs_icon("dice-4")`  `r bsicons::bs_icon("dice-4")`  `r bsicons::bs_icon("dice-5")`]{.fragment .strikethrough}
+- [`r bsicons::bs_icon("dice-1")` `r bsicons::bs_icon("dice-2")`  `r bsicons::bs_icon("dice-2")` `r bsicons::bs_icon("dice-2")`  `r bsicons::bs_icon("dice-3")`  `r bsicons::bs_icon("dice-5")` ?]{.fragment .fade-in}
+- [`r bsicons::bs_icon("dice-1")` `r bsicons::bs_icon("dice-1")`  `r bsicons::bs_icon("dice-2")` `r bsicons::bs_icon("dice-3")`  `r bsicons::bs_icon("dice-4")`  `r bsicons::bs_icon("dice-6")` ? ]{.fragment .fade-in}
+- [?]{.fragment .fade-in}
+
+
+
+# Berechtigte [Sorgen]{.fragment .highlight-red fragment-index=1} oder alles nur [Märchen]{.fragment .highlight-red fragment-index=1}?
+
+
+## Danke
+
+:::: {.columns}
+::: {.column width="55%"}
+![](fig/logo-globoalpin.jpg)
+:::
+
+::: {.column width="20%"}
+![](fig/logo-eu.png)
+![](fig/logo-eurac.png)
+:::
+
+::: {.column width="15%"}
+![](fig/logo-pat.png)
+![](fig/logo-unitn.jpg)
+:::
+::::
+
+
+
+<div id="scroll-container">
+  <div id="scroll-text" style="font-size: 1em;">
+ (in zufälliger Reihenfolge) Andrea Cicogna, Wolfgang
+ Schöner, Stefano Urbani, Sven Kotlarski, Luca Mercalli,
+ Alberto Bellin, Alice Crespi, Roberto Barbiero, Dino Zardi,
+ Daniele Cat Berro, Michael Winkler, Bruno Majone, Giorgia
+ Marcolini, Alexander Jacob, Roberto Cremonini, Mauro Gaddo,
+ Mattia Faletto, Viktor Weilguni, Gabriele Chiogna, Claudia
+ Notarnicola, James Peter Zellner, Christoph Marty, Marcello
+ Petitta, Ludovica De Gregorio, Sara Ratto, Andrea
+ Debernardi, Gernot Resch, Paola Cianfarra, Giacomo
+ Bertoldi, Samuel Morin, Marc Zebisch, Ulrich Strasser,
+ Andrea Sušnik, Michele Bozzoli, Yuri Brugnara, Simon C.
+ Scherrer, Valentina Premier, Günther Geier, Alberto Trenti,
+ Anna Napoli, Walter Beozzo, Carlo Maria Carmagnola, Silvia
+ Terzago, Isabelle Gouttevin, Carlo Marin, Mauro Valt,
+ Jean-Michel Soubeyroux, Lavinia Laiti, Lorenzo Giovannini,
+ Mattia Callegari, Alessio Bozzo, Gregor Vertacnik
+ </div>
+</div>
+
+:::: {.columns}
+::: {.column width="40%"}
+![](fig/logo-cast.png){height=120}
+:::
+
+::: {.column width="40%"}
+![](fig/logo-pow.png){height=120}
+:::
+
+::: {.column width="20%"}
+![](fig/logo-s4fs.png){height=120}
+:::
+::::
+
+
+
+
+
+
+
+
+## Kontakt {background-image="fig/snow-nz-2.JPG" background-size="cover" background-opacity="0.6"}
+
+::: {style="position: absolute; bottom: 0; right: 0; text-align: right;"}
+`r bs_icon("envelope-at")` [michael.matiu@unitn.it](michael.matiu@unitn.it)
+
+`r bs_icon("globe")` [mitmat.eu](https://mitmat.eu)  
+
+`r bs_icon("file-slides")` [https://mitmat.github.io/slides/](https://mitmat.github.io/slides/)
+
+`r bs_icon("three-dots")` [Eurac Schnee Dossier](https://www.eurac.edu/de/dossiers/dossier-schnee-suedtirol-alpen), [CliRSnow Projekt](https://clirsnow.netlify.app)
+
+:::

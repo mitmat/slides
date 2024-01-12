@@ -1,0 +1,63 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+/*--https://stackoverflow.com/questions/14593415/how-to-strike-through-obliquely-with-css --*/
+.strikethrough {
+  position: relative;
+}
+.strikethrough:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  right: 0;
+  border-top: 4px solid;
+  border-color: inherit;
+}
+
+/*-- https://blog.hubspot.com/website/scrolling-text-css --*/
+
+#scroll-container {
+  border: 0px solid black;
+  border-radius: 5px;
+  height: 150px;
+  overflow: hidden;
+}
+
+#scroll-text {
+  height: 100%;
+  text-align: center;
+  
+  /* animation properties */
+
+  
+  -moz-animation: my-animation 25s linear infinite normal;
+  -webkit-animation: my-animation 25s linear infinite normal;
+  animation: my-animation 25s linear infinite normal;
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+  from { -moz-transform: translateY(50%); }
+  to { -moz-transform: translateY(-530%); }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+  from { -webkit-transform: translateY(80%); }
+  to { -webkit-transform: translateY(-530%); }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateY(80%);
+    -webkit-transform: translateY(80%);
+    transform: translateY(80%);
+  }
+  to {
+    -moz-transform: translateY(-530%);
+    -webkit-transform: translateY(-530%);
+    transform: translateY(-530%);
+  }
+}
