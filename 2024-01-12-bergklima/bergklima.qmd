@@ -255,24 +255,6 @@ Cooles Video wie sich die Luftmassen um die Alpen bewegen.
 
 
 
-# Schneehöhen 1971-2019
-
-
-## {background-image="fig/trends-djf-left.png" background-size="contain"}
-## {background-image="fig/trends-djf.png" background-size="contain"}
-## {background-image="fig/trends-djf-numbers.png" background-size="contain"}
-## {background-image="fig/trends-mam.png" background-size="contain"}
-## {background-image="fig/trends-mam-numbers.png" background-size="contain"}
-
-## {.center}
-
-> "Über die vergangenen 45 Jahre ist ab mittleren Höhenlagen der Alpen kein Trend zu wärmeren Wintern
-messbar... Wer sich jetzt fragt, wo denn die Klimaerwärmung in den Alpen geblieben ist oder warum
-denn nun die Gletscher schrumpfen, dem sei
-gesagt: Die Sommer sind es!"
-
-
-
 
 # Schneefall 1921-2020
 
@@ -309,11 +291,6 @@ der Temperatur."
 
 
 # Und die Zukunft?
-
-## (Un-)Berechtigte Sorgen? {.center}
-
-> "Meine Generation und die nächsten beiden Generationen werden bestimmt keine
-Probleme mit dem Klimawandel haben."
 
 
 ## Treibhauseffekt
@@ -414,6 +391,15 @@ Source: [Serendipity blog](https://www.easterbrook.ca/steve/2014/05/tedx-talk-sh
 
 ::::
 
+
+
+## (Un-)Berechtigte Sorgen? {.center}
+
+> "Meine Generation und die nächsten beiden Generationen werden bestimmt keine
+Probleme mit dem Klimawandel haben."
+
+
+
 ## Europa
 
 Szenario RCP8.5: <br/> (kontinuierlich steigende Treibhausgase in der Atmosphäre) <br/> 4-5 °C globale Erwärmung bis Ende 21. Jh.
@@ -456,14 +442,6 @@ Zusammen (zumindest in den Alpen):
 
 
 
-
-## Jeder darf an Märchen glauben... {visibility="hidden"}
-
-> Es ist keinesfalls so, dass die Wissenschaft versucht, die Meinungsfreiheit einzudämmen. Das Recht auf freie Meinungsäußerung besitzt jeder und das ist zentral für unsere Demokratie. **Wenn jemand wirklich glaubt, dass die Erde eine Scheibe ist, soll derjenige seine Meinung behalten.** Jeder hat das Recht, sich auf die Straße zu stellen und sich zu blamieren. **Nur hat keiner das Recht darauf, damit ernst genommen zu werden.**
-
-::: aside
-[Florian Aigner, [Barfuss-Interview](https://www.barfuss.it/stories/das-ist-geistiges-fast-food/), "Das ist geistiges Fast Food"
-:::
 
 
 ## Schneepropheten?
@@ -573,4 +551,32 @@ Zukunft?
 
 `r bs_icon("three-dots")` [Eurac Schnee Dossier](https://www.eurac.edu/de/dossiers/dossier-schnee-suedtirol-alpen), [CliRSnow Projekt](https://clirsnow.netlify.app)
 
+:::
+
+
+
+# Bonus: Schneehöhen 1971-2019 {visibility="uncounted"}
+
+
+## {visibility="uncounted" background-image="fig/trends-djf-left.png" background-size="contain"}
+## {visibility="uncounted" background-image="fig/trends-djf.png" background-size="contain"}
+## {visibility="uncounted" background-image="fig/trends-djf-numbers.png" background-size="contain"}
+## {visibility="uncounted" background-image="fig/trends-mam.png" background-size="contain"}
+## {visibility="uncounted"background-image="fig/trends-mam-numbers.png" background-size="contain"} 
+
+## {visibility="uncounted" .center}
+
+> "Über die vergangenen 45 Jahre ist ab mittleren Höhenlagen der Alpen kein Trend zu wärmeren Wintern
+messbar... Wer sich jetzt fragt, wo denn die Klimaerwärmung in den Alpen geblieben ist oder warum
+denn nun die Gletscher schrumpfen, dem sei
+gesagt: Die Sommer sind es!"
+
+
+
+## Jeder darf an Märchen glauben... {visibility="uncounted"}
+
+> Es ist keinesfalls so, dass die Wissenschaft versucht, die Meinungsfreiheit einzudämmen. Das Recht auf freie Meinungsäußerung besitzt jeder und das ist zentral für unsere Demokratie. **Wenn jemand wirklich glaubt, dass die Erde eine Scheibe ist, soll derjenige seine Meinung behalten.** Jeder hat das Recht, sich auf die Straße zu stellen und sich zu blamieren. **Nur hat keiner das Recht darauf, damit ernst genommen zu werden.**
+
+::: aside
+Florian Aigner, [Barfuss-Interview](https://www.barfuss.it/stories/das-ist-geistiges-fast-food/), "Das ist geistiges Fast Food"
 :::
