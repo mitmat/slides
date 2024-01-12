@@ -1,19 +1,27 @@
 ---
 title: "Schnee im Klimawandel"
-subtitle: "Berechtigte Sorgen oder alles nur Märchen?"
-author: "Dr. Michael Matiu"
-institute: "DICAM, UniTrento"
+author: "Michael Matiu"
 date: "2024/01/12"
 format:
   revealjs: 
     theme: [simple, custom.scss]
-title-slide-attributes:
-  data-background-image: "/fig/snow-nz-3.JPG"
-  data-background-size: cover
-  data-background-opacity: "0.7"
 editor_options: 
   chunk_output_type: console
 ---
+
+## {background-image="fig/snow-nz-3.JPG" background-size="cover" background-opacity="0.7"}
+
+<h1 class="title">Schnee im Klimawandel</h1>
+<p class="subtitle">Berechtigte Sorgen oder alles nur Märchen?</p>
+
+<br/>
+
+Dr. Michael Matiu (DICAM, UniTrento)
+
+*2024/01/12*
+
+
+
 
 ```{r}
 library(bsicons)
