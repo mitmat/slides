@@ -457,7 +457,7 @@ Source: [Wikipedia](https://commons.wikimedia.org/wiki/File:Great_Mullein_(Verba
 :::
 
 
-## Klimawürfel (selbstgebaut)
+## Klimawürfel
 
 
 `r bs_icon("dice-1")` sehr wenig Schnee, `r bs_icon("dice-6")` extrem viel Schnee
@@ -516,6 +516,7 @@ Zukunft?
  Terzago, Isabelle Gouttevin, Carlo Marin, Mauro Valt,
  Jean-Michel Soubeyroux, Lavinia Laiti, Lorenzo Giovannini,
  Mattia Callegari, Alessio Bozzo, Gregor Vertacnik
+ und allen die täglich Schneemessungen gemacht haben und immer noch machen
  </div>
 </div>
 
