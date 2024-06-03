@@ -1,7 +1,7 @@
 ---
 title: "Schnee im Klimawandel"
 author: "Michael Matiu"
-date: "2024/01/12"
+date: "2024/06/09"
 format:
   revealjs: 
     theme: [simple, custom.scss]
@@ -18,7 +18,7 @@ editor_options:
 
 Dr. Michael Matiu (DICAM, UniTrento)
 
-*2024/01/12*
+*2024/06/09*
 
 
 
@@ -150,12 +150,12 @@ Source: [Alperia](https://landesregierung.provinz.bz.it/de/news/umweltplane-fur-
 :::
 
 
-## {background-image="../fig/cima-snow-2024.png" background-size="contain"}
+## {background-image="../fig/cima-snow-2024-adige.png" background-size="contain"}
 
 <!-- Schneewasseräquivalent <br> Italien 2023/24  -->
 
 ::: aside
-Source: [CIMA](https://www.cimafoundation.org/news/neve-deficit-del-44-nel-nostro-primo-aggiornamento-della-stagione/)
+Source: [CIMA](https://www.cimafoundation.org/news/neve-in-italia-un-inverno-di-luci-e-ombre/)
 :::
 
 
@@ -178,6 +178,25 @@ Source: [CIMA](https://www.cimafoundation.org/news/neve-deficit-del-44-nel-nostr
 ::: aside
 Source: [The Guardian](https://www.theguardian.com/world/2022/jun/17/italy-drought-po-river-climate-crisis)
 :::
+
+
+
+## 2022 Dürre Poebene -> Schneedürre
+
+
+::: {.r-stack}
+![](../fig/avanzi-2024-01-swe-anom.png){.fragment}
+
+![](../fig/avanzi-2024-02-restrictions.png){.fragment height="500"}
+:::
+
+
+
+
+::: aside
+Source: [Avanzi et al. 2024](https://doi.org/10.1038/s43247-024-01222-z)
+:::
+
 
 
 
@@ -349,7 +368,7 @@ Was ist was?
 
 
 ::: {.aside}
-Source: [WMO](https://wmo.int/content/kilometre-scale-modelling-of-earth-system-new-paradigm-climate-prediction)
+Source: [WMO](https://wmo.int/media/magazine-article/kilometre-scale-modelling-of-earth-system-new-paradigm-climate-prediction)
 :::
 
 
@@ -414,6 +433,9 @@ Source: [Coppola et al. 2021](https://doi.org/10.1029/2019JD032344)
 
 ##  {background-image="../fig/coppola-2021-prec-djf.png" background-size="contain"}
 
+##  {background-image="../fig/coppola-2021-tmax-jja.png" background-size="contain"}
+
+##  {background-image="../fig/coppola-2021-prec-jja.png" background-size="contain"}
 
 ## Was bedeutet das für den Schnee?
 
@@ -444,7 +466,7 @@ Zusammen (zumindest in den Alpen):
 
 
 
-## Schneepropheten?
+## Schneepropheten der Saison 2023-2024?
 
 ::: {.r-stack}
 ![](../fig/koenigskerze.jpg){.fragment height="500"}
@@ -478,7 +500,103 @@ Zukunft?
 # Berechtigte [Sorgen]{.fragment .highlight-red fragment-index=1} oder alles nur [Märchen]{.fragment .highlight-red fragment-index=1}?
 
 
-## Danke
+## Warum leugnen oder verzögern?
+
+
+:::: {.columns}
+::: {.column width="60%"}
+
+<a href="https://www.statista.com/chart/27887/big-oil-sees-profits-increase/" title="Infographic: Oil & Gas Giants Cash in Tens of Billions | Statista"><img src="https://cdn.statcdn.com/Infographic/images/normal/27887.jpeg" alt="Infographic: Oil & Gas Giants Cash in Tens of Billions | Statista" /></a>
+
+:::
+
+::: {.column width="40%"}
+Gewinn (nicht Umsatz) der Top 4 in Milliarden (!!)
+
+
+2022: 151,6 Mrd $ 
+2023: 107,1 Mrd $
+
+
+</br>
+und
+</br></br>
+
+
+Top 10 Umsatz =~ BIP (PIL) Italiens (s. [Time](https://time.com/6254086/fossil-fuel-2022-revenue-vs-country-gdp/))
+
+
+:::
+:::: 
+
+
+## Desinformation
+
+
+:::: {.columns}
+::: {.column width="60%"}
+
+![](../fig/influencemap_Spend_on_Climate_Lobbying_Bar.jpg)
+
+
+Source: [Influencemap](https://influencemap.org/report/How-Big-Oil-Continues-to-Oppose-the-Paris-Agreement-38212275958aa21196dae3b76220bddc) 
+
+:::
+
+
+::: {.column width="40%"}
+
+Meist mit outsourcing:
+
+- The Global Warming Policy Foundation
+- Friends of Science
+- Europäisches Institut für Klima und Energie (EIKE) (e.V.)
+- ...
+
+
+
+
+:::
+::::
+
+
+## Medienmacht und Missbrauch
+
+
+
+::: {.r-stack}
+![](../fig/x-rahmstorf-warming-good.jpeg){.fragment height="450"}
+
+![](../fig/collage-habeck-bild.png){.fragment height="550"}
+:::
+
+::: aside
+Source: [@rahmstorf on X](https://x.com/rahmstorf/status/1244752124891877382), [The Guardian](https://www.theguardian.com/media/2023/sep/23/rupert-murdoch-climate-change-denial), [Kobuk](https://kobuk.at/2023/02/die-kampagne-der-bild-gegen-habeck/)
+:::
+
+
+
+## Die üblichen Ausreden
+
+
+
+
+::: {.r-stack}
+![](../fig/DiscoursesClimateDelay_POSTER_DE.jpg){.fragment height="600"}
+
+![](../fig/DiscoursesClimateDelay_sub01.jpg){.fragment height="500"}
+
+![](../fig/DiscoursesClimateDelay_sub07.jpg){.fragment height="500"}
+:::
+
+
+::: aside
+Source: [Leolinne](https://www.leolinne.com/-discourses-of-climate-delay/deutsch)
+:::
+
+
+
+# Danke
 
 :::: {.columns}
 ::: {.column width="55%"}
