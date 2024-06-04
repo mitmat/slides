@@ -244,7 +244,8 @@ Source: [Hu et al., 2017](https://doi.org/10.3390/rs9101067)
 
 ## Alpen als Wetterscheide
 
-Cooles Video wie sich die Luftmassen um die Alpen bewegen.
+{{< video ../mov/alps-modulating-precip.mp4 >}}
+
 
 
 ## Datenquelle: Alpenweite in-situ Beobachtungen
@@ -582,11 +583,15 @@ Source: [@rahmstorf on X](https://x.com/rahmstorf/status/1244752124891877382), [
 
 
 ::: {.r-stack}
+
 ![](../fig/DiscoursesClimateDelay_POSTER_DE.jpg){.fragment height="600"}
 
 ![](../fig/DiscoursesClimateDelay_sub01.jpg){.fragment height="500"}
 
-![](../fig/DiscoursesClimateDelay_sub07.jpg){.fragment height="500"}
+![](../fig/DiscoursesClimateDelay_sub02.jpg){.fragment height="500"}
+
+![](../fig/DiscoursesClimateDelay_sub08.jpg){.fragment height="500"}
+
 :::
 
 
