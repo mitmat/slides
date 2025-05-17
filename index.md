@@ -1,4 +1,4 @@
-OUTDATED (as of 2023), please go to https://mitmat.github.io/slides-v2
+OUTDATED (as of 2023), please go to [https://mitmat.github.io/slides-v2](https://mitmat.github.io/slides-v2)
 
 ## Content
 
