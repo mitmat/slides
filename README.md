@@ -1,3 +1,5 @@
+DEPRECATED AS OF 2022 -> see https://github.com/mitmat/slides-v2 
+
 # Using Github Pages to host xaringan and quarto slides
 
 Main page hosted at <https://mitmat.github.io/slides/>
